@@ -10,8 +10,12 @@ function Home() {
     <div className="home">
         {/* Header */}
         <header>
-            <img className='logo' src={Logo}/>
-            <SearchBar className="searchBar"/>
+            <div className='logo'>
+                <img className='concreteLogo'src={Logo}/>
+            </div>
+            <div className='searchBar'>
+                <SearchBar/>
+            </div>
         </header>
 
         <div className="core">
