@@ -22,7 +22,9 @@ export default function Login(props){
                     <br/>
                     <input className='mdp' type="password" placeholder='Password' onChange={getPassword}/>
                     <br/>
-                    <button className='bConnexion'type="submit">Connexion</button><button type="reset">Annuler</button>
+                    <button className='bConnexion'type="submit" onClick={props.login}>
+                        Connexion 
+                    </button><button type="reset">Annuler</button>
                 </form>
             </div>
         </div>

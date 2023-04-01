@@ -8,7 +8,7 @@ export default function MainPage(){
 
     function getConnected(){
         setConnect(true)
-        setPage("home ?")
+        setPage("home")
     }
 
     function setLogout(){
@@ -18,7 +18,7 @@ export default function MainPage(){
 
     return (
         <div>
-            <NavigationPanel login={getConnected} logout={setLogout} isConnected={true}/>
+            <NavigationPanel login={getConnected} logout={setLogout} isConnected={isConnected}/>
         </div>
     )
 }

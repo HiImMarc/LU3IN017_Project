@@ -10,7 +10,7 @@ export default function SearchBar(props) {
 
     // Pour pouvoir effacer avec ctrl a + backspace
     function handleKeyDown(e) {
-        if (e.key === "Backspace" && e.ctrlKey && searchValue === "") {
+        if (e.key === "Backspace" && e.ctrlKey && searchInput === "") {
           props.onSearch("");
         }
       }

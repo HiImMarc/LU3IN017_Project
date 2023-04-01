@@ -6,8 +6,9 @@ import MessageList from './MessageList';
 import SideBar from './SideBar';
 import './Home.css'
 
-function Home() {
+function Home(props) {
 
+    //Etats pour la gestion des messages
     const [messageData, setMessageData] = useState([]);
     const [searchInput, setSearchInput] = useState("");
 
@@ -38,6 +39,7 @@ function Home() {
                 <div className='searchBar'>
                     <SearchBar onSearch={handleSearch}/>
                 </div>
+                <div className='miniprofile'>User Profile</div>
             </header>
 
             <div className="core">
@@ -45,7 +47,7 @@ function Home() {
                     <MessageList data={filteredMessages} searchInput={searchInput}/>
                 </div>
                 <div className="sideBar">
-                    <SideBar />
+                    <SideBar isConnected={props.isConnected} logout={props.logout} />
                 </div>
             </div>
 

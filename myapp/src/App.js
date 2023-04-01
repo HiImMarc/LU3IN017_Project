@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+const path = require('path');
+const api = require('./api.js');
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// Détermine le répertoire de base
+const basedir = path.normalize(path.dirname(__dirname));
+console.debug(`Base directory: ${basedir}`);
 
-export default App;
+express = require('express');
+const app = express()
+api_1 = require("./api.js");
+const session = require("express-session");
+
+app.use(session({
+    secret: "technoweb rocks"
+}));
+
+app.use('/api', api.default());
+
+// Démarre le serveur
+app.on('close', () => {
+});
+exports.default = app;
+

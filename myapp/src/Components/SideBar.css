@@ -1,0 +1,27 @@
+.sidebar {
+    position: sticky;
+    top: 80px; /* hauteur du header */
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 80px); /* soustraire la hauteur du header pour que la sidebar occupe tout l'espace restant */
+    justify-content: space-between;
+}
+
+.sidebar button {
+    height: 40px;
+    width: 300px;
+    margin-bottom: 40px;
+}
+
+.sidebar .button-accueil {
+    margin-top: 30px;
+}
+
+.sidebar .button-settings {
+    margin-top: auto;
+    margin-bottom: 40px;
+}
+
+.sidebar .logout {
+    margin-bottom: 20px;
+}
