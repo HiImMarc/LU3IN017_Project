@@ -1,0 +1,29 @@
+.main{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    padding: 150px 0 298px 0;
+    background-color: grey;
+}
+
+.signinform {
+    float: left;
+    width: 50%;
+}
+.loginform{
+    float: right;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    background-color: seagreen;
+}
+
+.mdp, .login{
+    height: 40px;
+    width: 300px;
+}
+
+.bConnexion{
+    background-color: silver;
+    width: 280px;
+}
