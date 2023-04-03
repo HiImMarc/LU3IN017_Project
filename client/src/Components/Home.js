@@ -30,6 +30,8 @@ function Home(props) {
         .then(data => setMessageData(data))
     }
 
+    console.log('Home : isConnected',props.isConnected)
+
     return (
         <div className="home">
             <header>
@@ -44,10 +46,10 @@ function Home(props) {
 
             <div className="core">
                 <div  className="messageList">
-                    <MessageList data={filteredMessages} searchInput={searchInput}/>
+                    <MessageList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput}/>
                 </div>
                 <div className="sideBar">
-                    <SideBar isConnected={props.isConnected} logout={props.logout} />
+                    <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} />
                 </div>
             </div>
 

@@ -3,11 +3,12 @@ import Message from './Message';
 
 export default function MessageList(props) {
 
-  console.log(props.data)
+  console.log(props.isConnected)
 
   return (
-    <div >
-      <ul>
+    <div className='messagelist'>
+      {props.isConnected ? 
+      (<ul>
         {props.data.map((item, index)=> (
           <Message 
           key={index}
@@ -17,7 +18,11 @@ export default function MessageList(props) {
           content={item.body} 
           />
         ))}
-      </ul>
+      </ul>)
+      :
+      (<div> Please connect to see messages </div>)
+      }
+
     </div>
   );
 }

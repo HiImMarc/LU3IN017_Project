@@ -16,6 +16,8 @@ export default function Login(props){
         setPassword(event.target.value);
     }
 
+    console.log('Je suis dans Login',props.login)
+
     return (
         <div className='main'>
             <div className='loginform'>
@@ -24,6 +26,7 @@ export default function Login(props){
                     <br/>
                     <input className='mdp' type="password" placeholder='Password' onChange={getPassword}/>
                     <br/>
+                    <Link to='/' onClick={props.login}>Connexion</Link>
                     <button className='bConnexion'type="submit" onClick={props.login}>
                         Connexion 
                     </button><button type="reset">Annuler</button>

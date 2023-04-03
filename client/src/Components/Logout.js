@@ -1,9 +1,9 @@
+import { Link } from "react-router-dom";
+
 export default function Logout(props){
     return (
         <div>
-            <button className="button" onClick={props.logout}>
-                Déconnexion
-            </button>
+            <Link to='/authentification' onClick={props.logout} >Déconnexion</Link>
         </div>
     );
 }

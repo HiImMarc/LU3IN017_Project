@@ -1,24 +1,13 @@
 import { useState, useEffect } from "react";
 import NavigationPanel from './NavigationPanel'
+import Home from "./Home";
 
+export default function MainPage(props){
 
-export default function MainPage(){
-    const[isConnected, setConnect] = useState(false);
-    const[page, setPage] = useState("signin_page");
-
-    function getConnected(){
-        setConnect(true)
-        setPage("home")
-    }
-
-    function setLogout(){
-        setConnect(false)
-        setPage("signin_page")
-    }
 
     return (
-        <div>
-            <NavigationPanel login={getConnected} logout={setLogout} isConnected={isConnected}/>
+        <div className="mainpage">
+            <Home isConnected={props.isConnected} login={props.getConnected} logout={props.setLogout} />
         </div>
     )
 }
