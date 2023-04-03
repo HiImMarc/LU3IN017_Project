@@ -1,7 +1,7 @@
 class Users {
   constructor(db) {this.db = db}
 
-  create(login, password, name, lastname){
+  createUser(login, password, name, lastname){
     return new Promise((resolve, reject) =>{
       this.db.collection('users').insertOne({login, password, name, lastname}, (error, result) => {
         if (error) {
@@ -13,7 +13,27 @@ class Users {
     });
   }
 
-  get(userid){
+  login(){
+    
+  }
+
+  logout(){
+
+  }
+
+  getId(){
+
+  }
+
+  getInfo(){
+
+  }
+
+  getAllUssers(){
+
+  }
+
+  getById(userid){
     const ObjectId = require('mongodb').ObjectId; //
     const query = { _id: new ObjectId(userid)}; // On fait ça prc que le id est un objet dans la bd
     return new Promise ((resolve, reject) => {
