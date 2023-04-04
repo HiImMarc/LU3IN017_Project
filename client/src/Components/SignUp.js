@@ -1,8 +1,8 @@
 import {useState} from 'react';
-import './SignIn.css'
+import './SignUp.css'
+import axios from 'axios';
 
-
-export default function SignIn(props){
+export default function SignUp(props){
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -23,6 +23,19 @@ export default function SignIn(props){
         setLastName(event.target.value);
     }
 
+    async function submit(e){
+        e.preventDefault();
+
+        try{
+            console.log("J'use")
+            await axios.post("http://localhost:8000/users/new", {
+                login, password, name, lastname
+            })
+        } catch (err){
+            console.log(err)
+        }
+    }
+
     return (
         <div className='main'>
             <div className='form'>
@@ -35,7 +48,7 @@ export default function SignIn(props){
                     <br/>
                     <input className='lastname' type="text" placeholder='lastName' onChange={getLastName}/>
                     <br/>
-                    <button className='bConnexion'type="submit" onClick={props.login}>
+                    <button className='bConnexion'type="submit" onClick={submit}>
                         Inscription
                     </button><button type="reset">Annuler</button>
                 </form>

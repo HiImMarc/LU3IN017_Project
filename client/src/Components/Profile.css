@@ -1,0 +1,5 @@
+.core {
+    display: flex;
+    flex-direction: row;
+    background-color: purple;
+}

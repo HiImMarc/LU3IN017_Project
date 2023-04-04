@@ -1,5 +1,5 @@
 import React from 'react'
-import SignIn from './SignIn'
+import SignUp from './SignUp'
 import Login from './Login'
 import Home from './Home'
 
@@ -13,7 +13,7 @@ export default function Authentification(props) {
         : 
         (<div className='main'>
           <div className='signform'>
-              <SignIn/>
+              <SignUp/>
           </div>
           <div className='loginform'>
               <Login login={props.login} />

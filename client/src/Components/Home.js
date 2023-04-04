@@ -5,6 +5,7 @@ import SearchBar from './SearchBar'
 import MessageList from './MessageList';
 import SideBar from './SideBar';
 import './Home.css'
+import { useLocation } from 'react-router-dom';
 
 function Home(props) {
 
@@ -29,6 +30,10 @@ function Home(props) {
         .then (response => response.json())
         .then(data => setMessageData(data))
     }
+
+    const location =useLocation();
+
+
 
     console.log('Home : isConnected',props.isConnected)
 

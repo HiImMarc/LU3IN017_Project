@@ -5,6 +5,7 @@ import SearchBar from './SearchBar'
 import MessageList from './MessageList';
 import SideBar from './SideBar';
 import './Home.css'
+import './Profile.css'
 
 export default function Profile(props) {
     
@@ -46,8 +47,9 @@ export default function Profile(props) {
 
             <div className="core">
                 <div className='profile'>MON PRFOL AFFICHE EST ICI</div>
+                <br/>
                 <div  className="messageList">
-                    <MessageList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput}/>
+                    <MessageList userID={props.userID} isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput}/>
                 </div>
                 <div className="sideBar">
                     <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} />

@@ -23,7 +23,7 @@ export default function AppRoutes() {
   return (
       <Routes>
         <Route exact path='/' element={<MainPage isConnected={isConnected} login={getConnected} logout={setLogout}/>}/>
-        <Route exact path='/home/profile' element={<Profile />}/>
+        <Route exact path='/home/profile' element={<Profile isConnected={isConnected} login={getConnected} logout={setLogout}/>}/>
         <Route exact path='/authentification' element={<Authentification isConnected={isConnected} login={getConnected} logout={setLogout}/>}/>
       </Routes>
   )
