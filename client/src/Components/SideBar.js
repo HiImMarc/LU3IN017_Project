@@ -9,6 +9,9 @@ export default function SideBar(props){
         <div className="sidebar">
             <button className='button-accueil'>Accueil</button>
             <button className='button-friends'>Friends</button>
+
+            <Link to='/home/profile'> My Profile</Link>
+
             <button className='button-myprofile'>My Profile</button>
             <button className='button-settings'>Settings</button>
             {props.isConnected ? 

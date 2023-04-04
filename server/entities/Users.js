@@ -3,7 +3,7 @@ class Users {
 
   createUser(login, password, name, lastname){
     return new Promise((resolve, reject) =>{
-      this.db.collection('users').insertOne({login, password, name, lastname}, (error, result) => {
+      this.db.collection('Users').insertOne({login, password, name, lastname}, (error, result) => {
         if (error) {
           reject(error);
         } else {
@@ -13,8 +13,23 @@ class Users {
     });
   }
 
-  login(){
-    
+  login(login, password){
+    return new Promise((resolve, reject) => {
+      this.db.collection('Users').find({
+        login : {$eq: login},
+        password : {$eq : password}
+      }).toArray((error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          if (result.length===1){
+            resolve(result[0]);
+          } else {
+            reject("normalement pas possible qu'il y ait 2 login pareil donc il y a jamais reject");
+          }
+        }
+      })
+    })
   }
 
   logout(){
