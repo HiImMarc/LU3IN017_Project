@@ -14,21 +14,33 @@ router.post("/users/new", async function(req,res){
     user.createUser(req.body.login, req.body.password, req.body.name, req.body.lastname)
 }) // Crée un compte
 
-router.get('/', (req, res) => {
-res.setHeader('Content-Type', 'text/plain;charset=UTF-8');
- res.send('Tout va à merveille');
-})
 
 router.get('/test',async  (req, res) => {
     const client = await connectToDB();
     const result =await client.db('Birdy').collection('Users').find().toArray()
     res.send(result);
     
-});
+}); // rien
+
+
+
+router.get('/login', async function(req, res) {
+    const {login, password}  = req.query;
+
+    const client = await connectToDB();
+    const user = new Users(client)
+    const result = await user.login(login, password);
+
+    // Si l'utilisateur existe, renvoyer son _id
+    if (result.length > 0) {
+        res.json({ _id: result[0]._id });
+    } else {
+        res.status(401).json({ message: 'Invalid credentials' });
+    }
+}) // Se connecte à un compte
 
 
 /*
-router.post("/users/login/:userid", Users.login) // Se connecte à un compte
 router.delete("/users/delete/:userid", Users.logout) // Supprime un compte
 router.get("/users/id/:userid", Users.getId) // Récupère l'id d'un user
 router.get("/users/id/infos/:user", Users.getInfo) // Récupère les infos d'un user

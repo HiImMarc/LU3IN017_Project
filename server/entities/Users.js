@@ -6,7 +6,8 @@ class Users {
 	createUser(login, password, name, lastname) {
 		console.log("JE SUIS DANS CREATEUSER")
 		return new Promise((resolve, reject) => {
-			this.database.db('Birdy').collection('Users').insertOne({ login, password, name, lastname }, (error, result) => {
+			this.database.db('Birdy').collection('Users')
+			.insertOne({ login, password, name, lastname }, (error, result) => {
 				if (error) {
 					reject(error);
 				} else {
@@ -18,21 +19,17 @@ class Users {
 
 	login(login, password) {
 		return new Promise((resolve, reject) => {
-			this.db.collection('Users').find({
-				login: { $eq: login },
-				password: { $eq: password }
-			}).toArray((error, result) => {
+			this.database.db('Birdy').collection('Users').findOne({ 
+				login: {$eq: login},
+				password: {$eq: password}
+			 }, (error, user) => {
 				if (error) {
 					reject(error);
 				} else {
-					if (result.length === 1) {
-						resolve(result[0]);
-					} else {
-						reject("normalement pas possible qu'il y ait 2 login pareil donc il y a jamais reject");
-					}
+					resolve(user ? user._id : null);
 				}
-			})
-		})
+			});
+		});
 	}
 
 	getId() {

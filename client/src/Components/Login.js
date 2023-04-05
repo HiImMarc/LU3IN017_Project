@@ -7,6 +7,7 @@ export default function Login(props) {
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [userid, setUserId] = useState("");
 
     function getLogin(event) {
         setLogin(event.target.value);
@@ -16,19 +17,25 @@ export default function Login(props) {
         setPassword(event.target.value);
     }
 
+
     async function submit(e){
         e.preventDefault();
 
         try{
-            await axios.post("http://localhost:8000/login", {
+            await axios.get("http://localhost:8000/login", {
                 login, password
             })
+            .then (function (response) {
+                console.log("response.data : ",response.data)
+                setUserId(response.data)
+            })
         } catch (err){
-            console.log(e)
+            console.log(err)
         }
     }
+    
 
-    console.log('Je suis dans Login', props.login)
+    console.log("userid",userid)
 
     return (
         <div className='main'>
