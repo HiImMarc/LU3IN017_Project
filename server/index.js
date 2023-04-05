@@ -9,4 +9,3 @@ app.use('/', router);
 
 
 app.listen(8000, () => { console.log("Serveur écoute port 8000")})
-

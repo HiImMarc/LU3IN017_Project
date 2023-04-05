@@ -4,16 +4,28 @@ const Users = require("./entities/Users")
 const Messages = require("./entities/Messages")
 const Friends = require("./entities/Friends.js")
 const connectToDB = require('./database/database')
+const { resolvePath } = require("react-router-dom")
 
-const users = new Users(connectToDB)
 
 
-router.post("/users/new", function(req,res){users.createUser}) // Crée un compte
+router.post("/users/new", async function(req,res){
+    const client = await connectToDB();
+    const user = new Users(client)
+    user.createUser(req.body.login, req.body.password, req.body.name, req.body.lastname)
+}) // Crée un compte
 
 router.get('/', (req, res) => {
 res.setHeader('Content-Type', 'text/plain;charset=UTF-8');
  res.send('Tout va à merveille');
 })
+
+router.get('/test',async  (req, res) => {
+    const client = await connectToDB();
+    const result =await client.db('Birdy').collection('Users').find().toArray()
+    res.send(result);
+    
+});
+
 
 /*
 router.post("/users/login/:userid", Users.login) // Se connecte à un compte
