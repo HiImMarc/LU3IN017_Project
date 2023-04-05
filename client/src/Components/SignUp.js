@@ -27,14 +27,22 @@ export default function SignUp(props){
         e.preventDefault();
 
         try{
-            console.log("J'use")
             await axios.post("http://localhost:8000/users/new", {
                 login, password, name, lastname
+            })
+            .then ( (response) => {
+                if (response.data === "login already exists"){
+                    console.log("CE LOGIN EXISTE DEJA");
+                } else {
+                    console.log("Utilisateur : ",login," a été crée avec succès !")
+                }
             })
         } catch (err){
             console.log(err)
         }
     }
+
+
 
     return (
         <div className='main'>

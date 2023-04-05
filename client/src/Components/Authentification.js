@@ -16,7 +16,7 @@ export default function Authentification(props) {
               <SignUp/>
           </div>
           <div className='loginform'>
-              <Login login={props.login} />
+              <Login login={props.login} userid={props.userid} setUserId={props.setUserId} />
           </div>
       </div>)}
     </nav>

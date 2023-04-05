@@ -7,7 +7,6 @@ export default function Login(props) {
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-    const [userid, setUserId] = useState("");
 
     function getLogin(event) {
         setLogin(event.target.value);
@@ -17,25 +16,31 @@ export default function Login(props) {
         setPassword(event.target.value);
     }
 
-
     async function submit(e){
         e.preventDefault();
 
         try{
+            console.log("J'use et : ",login,password)
             await axios.get("http://localhost:8000/login", {
-                login, password
+                params: {
+                    login: login,
+                    password: password
+                }
             })
-            .then (function (response) {
-                console.log("response.data : ",response.data)
-                setUserId(response.data)
+            .then ((res) => {
+                if (res.data === "wrong password or login"){
+                    console.log("mauvais identifiants")
+                } else {
+                    props.setUserId(res.data);
+                    props.login()
+                }
             })
         } catch (err){
             console.log(err)
         }
-    }
-    
 
-    console.log("userid",userid)
+     
+    }
 
     return (
         <div className='main'>
@@ -45,10 +50,9 @@ export default function Login(props) {
                     <br />
                     <input className='mdp' type="password" placeholder='Password' onChange={getPassword} />
                     <br />
-                    <Link to='/' onClick={props.login}>Connexion</Link>
-                    <button className='bConnexion' type="submit" onClick={submit}>
-                        Connexion
-                    </button><button type="reset">Annuler</button>
+                    <Link to='/' onClick={props.login} userid={props.userid}>Connexion</Link>
+                    <button className='bConnexion' type="submit" onClick={submit}> Connexion </button>
+                    <button type="reset">Annuler</button>
                 </form>
             </div>
         </div>

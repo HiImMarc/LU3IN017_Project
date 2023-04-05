@@ -10,14 +10,14 @@ export default function SideBar(props){
             <button className='button-accueil'>Accueil</button>
             <button className='button-friends'>Friends</button>
 
-            <Link to='/home/profile'> My Profile</Link>
+            <Link to='/home/profile' userid={props.userid} setUserId={props.setUserId}> My Profile</Link>
 
             <button className='button-myprofile'>My Profile</button>
             <button className='button-settings'>Settings</button>
             {props.isConnected ? 
-            (<Logout className='logout' logout={props.logout}/>)
+            (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} />)
             :
-            (<Link to='/authentification'>Cliquez ici pour vous connectez hehe </Link>)
+            (<Link to='/authentification' userid={props.userid} setUserId={props.setUserId} >Cliquez ici pour vous connectez hehe </Link>)
             }
         </div>
     );

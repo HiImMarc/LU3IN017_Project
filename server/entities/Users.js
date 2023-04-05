@@ -4,33 +4,47 @@ class Users {
 	}
 
 	createUser(login, password, name, lastname) {
-		console.log("JE SUIS DANS CREATEUSER")
-		return new Promise((resolve, reject) => {
-			this.database.db('Birdy').collection('Users')
-			.insertOne({ login, password, name, lastname }, (error, result) => {
-				if (error) {
-					reject(error);
-				} else {
-					resolve(result.insertedId)
-				}
-			});
+		return new Promise( async (resolve, reject) => {
+
+			const exists = await this.database.db('Birdy').collection('Users').findOne({login})
+			.catch ((error) => {
+				console.log(error);
+			})
+
+			console.log("exists : ", exists)
+
+			if (exists) {
+				console.log("on entre dans le if");
+				resolve("login already exists");
+
+			} else {
+				this.database.db('Birdy').collection('Users')
+				.insertOne({ login, password, name, lastname }, (error, result) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(result.insertedId)
+					}
+				});
+			}
 		});
 	}
 
+
 	login(login, password) {
 		return new Promise((resolve, reject) => {
-			this.database.db('Birdy').collection('Users').findOne({ 
-				login: {$eq: login},
-				password: {$eq: password}
-			 }, (error, user) => {
-				if (error) {
-					reject(error);
-				} else {
-					resolve(user ? user._id : null);
-				}
+			const result = this.database.db('Birdy').collection('Users').findOne({
+				login : {$eq : login},
+				password : {$eq : password}
 			});
+			if (result) {
+				resolve(result);
+			} else {
+				reject();
+			}
 		});
 	}
+
 
 	getId() {
 
@@ -58,17 +72,21 @@ class Users {
 		})
 	}
 
+	/*
 	exists(login) {
 		return new Promise((resolve, reject) => {
-			this.db.collection('users').findOne({ login }, (err, user) => {
+			console.log("function exists : login =", login)
+			this.database.db('Birdy').collection('Users').findOne({ login }, (err, user) => {
 				if (err) {
-					reject(err);
+					console.log("errei",err);
 				} else {
-					resolve(!!user);
+					console.log("dans le resolve")
+					resolve(user ? user : "!exists")
 				}
 			});
 		});
 	}
+	*/
 
 	checkpassword(login, password) {
 		return new Promise((resolve, reject) => {

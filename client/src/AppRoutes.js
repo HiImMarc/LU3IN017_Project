@@ -8,23 +8,25 @@ import { useState, useEffect } from 'react'
 
 export default function AppRoutes() {
   const[isConnected, setConnect] = useState(false);
-  const[page, setPage] = useState("signin_page");
+  const[userid, setId] = useState("");
 
   function getConnected(){
       setConnect(true)
-      setPage("home")
   }
 
   function setLogout(){
       setConnect(false)
-      setPage("signin_page")
+  }
+
+  function setUserId(id){
+    setId(id)
   }
 
   return (
       <Routes>
-        <Route exact path='/' element={<MainPage isConnected={isConnected} login={getConnected} logout={setLogout}/>}/>
-        <Route exact path='/home/profile' element={<Profile isConnected={isConnected} login={getConnected} logout={setLogout}/>}/>
-        <Route exact path='/authentification' element={<Authentification isConnected={isConnected} login={getConnected} logout={setLogout}/>}/>
+        <Route exact path='/' element={<MainPage isConnected={isConnected} login={getConnected} logout={setLogout} userid={userid} setUserId={setUserId}/>}/>
+        <Route exact path='/home/profile' element={<Profile isConnected={isConnected} login={getConnected} logout={setLogout} userid={userid} setUserId={setUserId}/>}/>
+        <Route exact path='/authentification' element={<Authentification isConnected={isConnected} login={getConnected} logout={setLogout} userid={userid} setUserId={setUserId}/>}/>
       </Routes>
   )
 

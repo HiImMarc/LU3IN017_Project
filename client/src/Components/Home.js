@@ -51,10 +51,10 @@ function Home(props) {
 
             <div className="core">
                 <div  className="messageList">
-                    <MessageList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput}/>
+                    <MessageList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
                 </div>
                 <div className="sideBar">
-                    <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} />
+                    <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} userid={props.userid} setUserId={props.setUserId} />
                 </div>
             </div>
 

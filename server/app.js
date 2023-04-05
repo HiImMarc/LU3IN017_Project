@@ -11,33 +11,32 @@ const { resolvePath } = require("react-router-dom")
 router.post("/users/new", async function(req,res){
     const client = await connectToDB();
     const user = new Users(client)
-    user.createUser(req.body.login, req.body.password, req.body.name, req.body.lastname)
+    const result = await user.createUser(req.body.login, req.body.password, req.body.name, req.body.lastname)
+    res.send(result);
 }) // Crée un compte
 
 
 router.get('/test',async  (req, res) => {
     const client = await connectToDB();
-    const result =await client.db('Birdy').collection('Users').find().toArray()
+    const result = await client.db('Birdy').collection('Users').find().toArray()
     res.send(result);
     
 }); // rien
 
 
+router.get("/login", async function(req, res) {
 
-router.get('/login', async function(req, res) {
-    const {login, password}  = req.query;
+    console.log("sjqkdlsq : ", req.query.login, req.query.password)
 
     const client = await connectToDB();
     const user = new Users(client)
-    const result = await user.login(login, password);
-
-    // Si l'utilisateur existe, renvoyer son _id
-    if (result.length > 0) {
-        res.json({ _id: result[0]._id });
+    const result = await user.login(req.query.login, req.query.password);
+    if (result) {
+        res.send(result._id);
     } else {
-        res.status(401).json({ message: 'Invalid credentials' });
+        res.send("wrong password or login")
     }
-}) // Se connecte à un compte
+}) // Se connecte à un compte (en réalité retourne juste l'id du connecté, la connexion se fera dans le côté front)
 
 
 /*
