@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 class Users {
 	constructor(database) {
 		this.database = database
@@ -50,8 +52,17 @@ class Users {
 
 	}
 
-	getInfo() {
-
+	getInfo(id) {
+		return new Promise( (resolve, reject) => {
+			const result = this.database.db('Birdy').collection('Users').findOne(
+				{ _id : new ObjectId(id) }
+			)
+			if (result) {
+				resolve(result);
+			} else {
+				reject("error getInfo");
+			}
+		})
 	}
 
 	getAllUssers() {

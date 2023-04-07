@@ -5,6 +5,7 @@ const Messages = require("./entities/Messages")
 const Friends = require("./entities/Friends.js")
 const connectToDB = require('./database/database')
 const { resolvePath } = require("react-router-dom")
+const { Query } = require("mongoose")
 
 
 
@@ -14,15 +15,6 @@ router.post("/users/new", async function(req,res){
     const result = await user.createUser(req.body.login, req.body.password, req.body.name, req.body.lastname)
     res.send(result);
 }) // Crée un compte
-
-
-router.get('/test',async  (req, res) => {
-    const client = await connectToDB();
-    const result = await client.db('Birdy').collection('Users').find().toArray()
-    res.send(result);
-    
-}); // rien
-
 
 router.get("/login", async function(req, res) {
 
@@ -38,11 +30,27 @@ router.get("/login", async function(req, res) {
     }
 }) // Se connecte à un compte (en réalité retourne juste l'id du connecté, la connexion se fera dans le côté front)
 
+router.get("/users/id/infos/:user", async function(req, res){
+    const client = await connectToDB();
+    const user = new Users(client); 
+    
+    console.log("DANS LAPP MON ID EST EGAL A ", req.query.id)
+
+    const id = req.query.id // On récupère l'id de l'user connecté
+
+    const result = await user.getInfo(id);
+    if (result){
+        res.send(result);
+    } else {
+        res.send("erreur lors de getInfos");
+    }
+}) // Récupère les infos d'un user
+
+
 
 /*
 router.delete("/users/delete/:userid", Users.logout) // Supprime un compte
 router.get("/users/id/:userid", Users.getId) // Récupère l'id d'un user
-router.get("/users/id/infos/:user", Users.getInfo) // Récupère les infos d'un user
 
 router.get("/messages", Messages.getAllMessages) // Récupère tout les messages
 router.get("/messages/user/:userid", Messages.getAllMessagesId) // Récupère les messages d'un user

@@ -5,8 +5,8 @@ import SearchBar from './SearchBar'
 import MessageList from './MessageList';
 import SideBar from './SideBar';
 import './Home.css'
-import { useLocation } from 'react-router-dom';
-
+import axios
+ from 'axios';
 function Home(props) {
 
     //Etats pour la gestion des messages
@@ -21,6 +21,11 @@ function Home(props) {
         item.body.toLowerCase().includes(searchInput.toLowerCase())
     );
 
+    // Les infos de l'user 
+    const [pseudo, setPseudo] = useState("Please Connect");
+    const [name, setNom] = useState("No name please connect");
+    const [lastname, setLastName] = useState("No lastname please connect");
+
     function handleSearch(input){
         setSearchInput(input);
     }
@@ -31,11 +36,22 @@ function Home(props) {
         .then(data => setMessageData(data))
     }
 
-    const location =useLocation();
-
-
 
     console.log('Home : isConnected',props.isConnected)
+    console.log("MON ID est : ", props.userid);
+
+    function setInfos(){
+        axios.get("http://localhost:8000/login", {
+            params: {
+                id : props.userid
+            }
+        })
+        .then( (res) => {
+            console.log("RESULTAT DE SETINFOS",res);
+        })
+    }
+
+
 
     return (
         <div className="home">
@@ -46,7 +62,17 @@ function Home(props) {
                 <div className='searchBar'>
                     <SearchBar onSearch={handleSearch}/>
                 </div>
-                <div className='miniprofile'>User Profile</div>
+                <div className='miniprofile'>
+
+                    <label className='pseudo'>{pseudo}</label>
+                    <br/>
+                    <label className='nom'>{name}</label>
+                    <br/>
+                    <label className='prenom'>{lastname}</label>
+
+                    {/* RAJOUTER LE NOMBRE D AMIS ? ET PTET LE NOMBRE DE MSG ? ET DAUTRES TRUCS JSP ENCORE */}
+
+                </div>
             </header>
 
             <div className="core">
@@ -57,7 +83,6 @@ function Home(props) {
                     <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} userid={props.userid} setUserId={props.setUserId} />
                 </div>
             </div>
-
         </div>
     );
 }

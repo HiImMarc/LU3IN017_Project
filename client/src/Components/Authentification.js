@@ -5,6 +5,8 @@ import Home from './Home'
 
 
 export default function Authentification(props) {
+
+  console.log("DANS AUTH : userid :", props.userid)
   
   return (
     <nav>
