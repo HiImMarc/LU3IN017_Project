@@ -9,11 +9,6 @@ export default function Login(props) {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
 
-    // Les infos de l'user 
-    const [pseudo, setPseudo] = useState("Please Connect");
-    const [name, setNom] = useState("No name please connect");
-    const [lastname, setLastName] = useState("No lastname please connect");
-
     function getLogin(event) {
         setLogin(event.target.value);
     }
@@ -46,13 +41,30 @@ export default function Login(props) {
                     password: password
                 }
             })
+            //On "connecte" l'user
             .then ((res) => {
                 if (res.data === "wrong password or login"){
                     console.log("mauvais identifiants")
                 } else {
-                    setInfos()
                     navigate('/')
                     props.login()
+                    return res.data  // On a besoin de l'id pour récup les info de l'user
+                }
+            })
+            //On récupère les infos de l'user
+            .then ( async (res) => { // async ?
+                if (res){
+                    await axios.get("/users/id/infos/:user", { // await ?
+                        params: {
+                            id : res
+                        }
+                    })
+                    .then( (res) => {
+                        props.setUserInfo(res.data.login, res.data.name, res.data.lastname)
+                    })
+                    .catch ((e) => {
+                        console.log(e)
+                    })
                 }
             })
         } catch (err){

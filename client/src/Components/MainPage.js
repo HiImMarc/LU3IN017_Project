@@ -8,7 +8,9 @@ export default function MainPage(props){
 
     return (
         <div className="mainpage">
-            <Home isConnected={props.isConnected} login={props.getConnected} logout={props.setLogout} userid={props.userid} setUserId={props.setUserId}/>
+            <Home isConnected={props.isConnected} login={props.getConnected} logout={props.setLogout}
+            userid={props.userid} setUserId={props.setUserId}
+            setUserInfo={props.setUserInfo}/>
         </div>
     )
 }

@@ -21,11 +21,6 @@ function Home(props) {
         item.body.toLowerCase().includes(searchInput.toLowerCase())
     );
 
-    // Les infos de l'user 
-    const [pseudo, setPseudo] = useState("Please Connect");
-    const [name, setNom] = useState("No name please connect");
-    const [lastname, setLastName] = useState("No lastname please connect");
-
     function handleSearch(input){
         setSearchInput(input);
     }
@@ -39,18 +34,6 @@ function Home(props) {
 
     console.log('Home : isConnected',props.isConnected)
     console.log("MON ID est : ", props.userid);
-
-    function setInfos(){
-        axios.get("http://localhost:8000/login", {
-            params: {
-                id : props.userid
-            }
-        })
-        .then( (res) => {
-            console.log("RESULTAT DE SETINFOS",res);
-        })
-    }
-
 
 
     return (
