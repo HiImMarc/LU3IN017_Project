@@ -46,20 +46,22 @@ export default function Login(props) {
                 if (res.data === "wrong password or login"){
                     console.log("mauvais identifiants")
                 } else {
+                    props.setUserId(res.data)
                     navigate('/')
                     props.login()
                     return res.data  // On a besoin de l'id pour récup les info de l'user
                 }
             })
             //On récupère les infos de l'user
-            .then ( async (res) => { // async ?
+            .then ( async (res) => {
                 if (res){
-                    await axios.get("/users/id/infos/:user", { // await ?
+                    await axios.get("http://localhost:8000/users/id/infos/:user", {
                         params: {
                             id : res
                         }
                     })
                     .then( (res) => {
+                        console.log("ON A REUSSI ? :",res.data.login, res.data.name, res.data.lastname)
                         props.setUserInfo(res.data.login, res.data.name, res.data.lastname)
                     })
                     .catch ((e) => {
@@ -84,7 +86,6 @@ export default function Login(props) {
                     <br />
                     <input className='mdp' type="password" placeholder='Password' onChange={getPassword} />
                     <br />
-                    <Link to='/' onClick={props.login} userid={props.userid}>Connexion</Link>
                     <button className='bConnexion' type="submit" onClick={submit}> Connexion </button>
                     <button type="reset">Annuler</button>
                 </form>

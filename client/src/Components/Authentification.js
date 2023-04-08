@@ -11,7 +11,7 @@ export default function Authentification(props) {
   return (
     <nav>
       {props.isConnected ? 
-        (<Home isConnected={props.isConnected} logout={props.logout}/> )
+        (<Home pseudo={props.pseudo} name={props.name} lastname={props.lastname} isConnected={props.isConnected} logout={props.logout}/> )
         : 
         (<div className='main'>
           <div className='signform'>
@@ -19,7 +19,7 @@ export default function Authentification(props) {
           </div>
           <div className='loginform'>
               <Login login={props.login} userid={props.userid} setUserId={props.setUserId}
-              setUserInfo={props.setUserInfo} />
+              pseudo={props.pseudo} name={props.name} lastname={props.lastname} setUserInfo={props.setUserInfo} />
           </div>
       </div>)}
     </nav>

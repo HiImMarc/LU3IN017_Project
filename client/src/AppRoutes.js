@@ -10,18 +10,16 @@ export default function AppRoutes() {
   const[isConnected, setConnect] = useState(false);
   const[userid, setId] = useState("");
 
-  const[infoUser, setInfoUser] = useState({
-    login : "default",
-    name : "default",
-    lastname : "default"
-  })
+  const[pseudo, setPseudo] = useState("default Pseudo")
+  const[name, setName] = useState("default Name")
+  const[lastname, setLastName] = useState("default Lastname")
 
-  function setUserInfo(login, name, lastname){
-    setInfoUser({
-      login : {login},
-      name : {name},
-      lastname : {lastname}
-    })
+  
+
+  function setUserInfo(pseudo, name, lastname){
+    setPseudo(pseudo)
+    setName(name)
+    setLastName(lastname)
   }
 
   function getConnected(){
@@ -41,15 +39,16 @@ export default function AppRoutes() {
         
         <Route exact path='/' element={<MainPage isConnected={isConnected} login={getConnected} logout={setLogout}
          userid={userid} setUserId={setUserId}
-         setUserInfo={setUserInfo}/>}/>
+         pseudo={pseudo} name={name} lastname={lastname}setUserInfo={setUserInfo}
+         />}/>
 
         <Route exact path='/home/profile' element={<Profile isConnected={isConnected} login={getConnected} logout={setLogout} 
         userid={userid} setUserId={setUserId}
-        setUserInfo={setUserInfo}/>}/>
+        pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo}/>}/>
 
         <Route exact path='/authentification' element={<Authentification isConnected={isConnected} login={getConnected} logout={setLogout} 
         userid={userid} setUserId={setUserId}
-        setUserInfo={setUserInfo}/>}/>
+        pseudo={pseudo} name={name} lastname={lastname}setUserInfo={setUserInfo}/>}/>
 
       </Routes>
   )

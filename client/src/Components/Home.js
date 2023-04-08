@@ -47,11 +47,11 @@ function Home(props) {
                 </div>
                 <div className='miniprofile'>
 
-                    <label className='pseudo'>{pseudo}</label>
+                    <label className='pseudo'>{props.pseudo}</label>
                     <br/>
-                    <label className='nom'>{name}</label>
+                    <label className='nom'>{props.name}</label>
                     <br/>
-                    <label className='prenom'>{lastname}</label>
+                    <label className='prenom'>{props.lastname}</label>
 
                     {/* RAJOUTER LE NOMBRE D AMIS ? ET PTET LE NOMBRE DE MSG ? ET DAUTRES TRUCS JSP ENCORE */}
 
@@ -63,7 +63,8 @@ function Home(props) {
                     <MessageList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
                 </div>
                 <div className="sideBar">
-                    <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} userid={props.userid} setUserId={props.setUserId} />
+                    <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} userid={props.userid} setUserId={props.setUserId}
+                    pseudo={props.pseudo} name={props.name} lastname={props.lastname} />
                 </div>
             </div>
         </div>

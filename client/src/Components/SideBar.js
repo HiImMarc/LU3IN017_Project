@@ -15,9 +15,9 @@ export default function SideBar(props){
             <button className='button-myprofile'>My Profile</button>
             <button className='button-settings'>Settings</button>
             {props.isConnected ? 
-            (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} />)
+            (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} name={props.name} lastname={props.lastname}  />)
             :
-            (<Link to='/authentification' userid={props.userid} setUserId={props.setUserId} >Cliquez ici pour vous connectez hehe </Link>)
+            (<Link to='/authentification' userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} name={props.name} lastname={props.lastname} >Cliquez ici pour vous connectez hehe </Link>)
             }
         </div>
     );
