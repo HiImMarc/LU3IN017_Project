@@ -1,6 +1,8 @@
 const cors = require('cors')
 const express = require('express'); 
 const app = express();
+const session = require('express-session') // J'ai pas compris c'est quoi encore
+
 app.use(express.json());
 app.use(cors()) // Use this after the variable declaration
 

@@ -3,19 +3,20 @@ import Message from './Message';
 
 export default function MessageList(props) {
 
-  console.log(props.isConnected)
+  const messages = props.data
 
   return (
     <div className='messagelist'>
       {props.isConnected ? 
       (<ul>
-        {props.data.map((item, index)=> (
+        {messages.map((item, index)=> (
           <Message 
           key={index}
-          userId={item.userId}
-          id={item.id}
-          title={item.title}
-          content={item.body} 
+          authorid={item.authorid}
+          name={item.name}
+          lastname={item.lastname}
+          pseudo={item.pseudo}
+          content={item.content} 
           />
         ))}
       </ul>)

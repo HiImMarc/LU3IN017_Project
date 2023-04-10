@@ -2,7 +2,7 @@ import React from 'react'
 import SignUp from './SignUp'
 import Login from './Login'
 import Home from './Home'
-
+import './Authentification.css'
 
 export default function Authentification(props) {
 

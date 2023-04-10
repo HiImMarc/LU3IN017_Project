@@ -17,17 +17,6 @@ export default function Login(props) {
         setPassword(event.target.value);
     }
 
-    function setInfos(){
-        axios.get('http://localhost:8000/users/id/infos/:user', {
-            params: {
-                id : props.userid
-            }
-        })
-        .then( (res) => {
-            console.log("RESULTAT DE SETINFOS");
-        })
-    }
-
     const navigate = useNavigate();
 
     async function submit(e){
@@ -46,10 +35,12 @@ export default function Login(props) {
                 if (res.data === "wrong password or login"){
                     console.log("mauvais identifiants")
                 } else {
-                    props.setUserId(res.data)
+                    console.log("res[0].data", res)
+                    props.setUserId(res.data._id)
+                    localStorage.setItem('token', res.data.token)
                     navigate('/')
                     props.login()
-                    return res.data  // On a besoin de l'id pour récup les info de l'user
+                    return res[0].data  // On a besoin de l'id pour récup les info de l'user
                 }
             })
             //On récupère les infos de l'user
@@ -90,6 +81,8 @@ export default function Login(props) {
                     <button type="reset">Annuler</button>
                 </form>
             </div>
+
+            <Link className='tosignup' to='/signup'>Déjà inscrit ? Connectez vous ici</Link>
         </div>
     );
 }

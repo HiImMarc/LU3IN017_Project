@@ -16,7 +16,6 @@ class Users {
 			console.log("exists : ", exists)
 
 			if (exists) {
-				console.log("on entre dans le if");
 				resolve("login already exists");
 
 			} else {

@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import './SignUp.css'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function SignUp(props){
 
@@ -61,6 +62,8 @@ export default function SignUp(props){
                     </button><button type="reset">Annuler</button>
                 </form>
             </div>
+            <Link className='tologin' to='/login'>Pas de compte ? Inscrivez vous ici</Link>
+
         </div>
     );
 }

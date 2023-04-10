@@ -1,0 +1,11 @@
+.main {
+    display: flex;
+}
+
+.login {
+    position: right;
+}
+
+.signin {
+    position: left;
+}

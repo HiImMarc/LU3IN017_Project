@@ -13,23 +13,34 @@ function Home(props) {
     const [messageData, setMessageData] = useState([]);
     const [searchInput, setSearchInput] = useState("");
 
-    useEffect(getMessageData, [])
+    useEffect(getMessagesData, [])
 
     // Filtrer le tableau de messages en fonction de la valeur de recherche
-    const filteredMessages = messageData.filter(item =>
-        item.title.toLowerCase().includes(searchInput.toLowerCase()) ||
-        item.body.toLowerCase().includes(searchInput.toLowerCase())
+    let filteredMessages = messageData.filter(item =>
+        (searchInput.trim() === "") ||
+        item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+        item.content.toLowerCase().includes(searchInput.toLowerCase()) ||
+        item.lastname.toLowerCase().includes(searchInput.toLowerCase()) ||
+        item.pseudo.toLowerCase().includes(searchInput.toLowerCase())
     );
 
     function handleSearch(input){
         setSearchInput(input);
     }
 
-    function getMessageData(){
-        fetch('https://jsonplaceholder.typicode.com/posts')
-        .then (response => response.json())
-        .then(data => setMessageData(data))
+    function getMessagesData(){ 
+        axios.get("http://localhost:8000/messages")
+        .then ( (res) => {
+            setMessageData(res.data)
+            console.log("LA DATA MESSAGE RETURNED EST :", res.data)
+            console.log("LA DATA MESSAGE EST :", messageData)
+            
+        })
+        .catch(error => console.log(error))
+
     }
+
+
 
 
     console.log('Home : isConnected',props.isConnected)
@@ -63,7 +74,7 @@ function Home(props) {
                     <MessageList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
                 </div>
                 <div className="sideBar">
-                    <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} userid={props.userid} setUserId={props.setUserId}
+                    <SideBar updateMessages={getMessagesData} getMessagesData={getMessagesData} isConnected={props.isConnected} logout={props.logout} login={props.login} userid={props.userid} setUserId={props.setUserId}
                     pseudo={props.pseudo} name={props.name} lastname={props.lastname} />
                 </div>
             </div>
