@@ -45,7 +45,7 @@ export default function AppRoutes() {
       })
 
     }
-  })
+  }, [isConnected,userid,pseudo,name,lastname])
 
   function setUserInfo(pseudo, name, lastname) {
     setPseudo(pseudo)

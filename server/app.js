@@ -2,16 +2,28 @@ const router = require("express").Router()
 
 const Users = require("./entities/Users")
 const Messages = require("./entities/Messages")
-const Friends = require("./entities/Friends.js")
+const Friends = require("./entities/Friends.js") // va être abandonné je crois ? Je vois pas comment implémenter ça
 const connectToDB = require('./database/database')
-const { resolvePath } = require("react-router-dom")
-const { Query } = require("mongoose")
 const jwt = require('jsonwebtoken')
 
 
+const dbMiddleware = async (req, res, next) => { // Fonction pour donner une instance de la database à mes routes
+    try {
+      const client = await connectToDB();
+      req.db = client.db('Birdy');
+      next();
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Erreur interne du serveur');
+    }
+};
+router.use(dbMiddleware);
+
+
 router.post("/users/new", async function(req,res){
-    const client = await connectToDB();
-    const user = new Users(client)
+    // const client = await connectToDB();
+    // const user = new Users(client)
+    const user = new Users(req.db)
     const result = await user.createUser(req.body.login, req.body.password, req.body.name, req.body.lastname)
     res.send(result);
 }) // Crée un compte
@@ -20,8 +32,9 @@ router.get("/login", async function(req, res) {
 
     console.log("sjqkdlsq : ", req.query.login, req.query.password)
 
-    const client = await connectToDB();
-    const user = new Users(client)
+    // const client = await connectToDB();
+    // const user = new Users(client)
+    const user = new Users(req.db)
     const result = await user.login(req.query.login, req.query.password);
     if (result) {
         const token = jwt.sign({id : result._id},'key');
@@ -33,9 +46,10 @@ router.get("/login", async function(req, res) {
 }) // Se connecte à un compte (en réalité retourne juste l'id du connecté, la connexion se fera dans le côté front)
 
 router.get("/users/id/infos/:user", async function(req, res){
-    const client = await connectToDB();
-    const user = new Users(client); 
-    
+    // const client = await connectToDB();
+    // const user = new Users(client); 
+    const user = new Users(req.db)
+
     console.log("DANS LAPP MON ID EST EGAL A ", req.query.id)
 
     const id = req.query.id // On récupère l'id de l'user connecté
@@ -49,9 +63,9 @@ router.get("/users/id/infos/:user", async function(req, res){
 }) // Récupère les infos d'un user
 
 router.post("/messages/new", async function(req, res) {
-    const client = await connectToDB();
-    const message = new Messages(client); 
-
+    // const client = await connectToDB();
+    // const message = new Messages(client); 
+    const message = new Messages(req.db); 
     console.log("dans app : userid et content : ", req.body.id, req.body.content)
 
     await message.createMessage(req.body.id, req.body.name, req.body.lastname, req.body.pseudo, req.body.content)
@@ -66,8 +80,9 @@ router.post("/messages/new", async function(req, res) {
 }) // Crée un message
 
 router.get("/messages",async function(req, res) {
-    const client = await connectToDB();
-    const message = new Messages(client); 
+    // const client = await connectToDB();
+    // const message = new Messages(client); 
+    const message = new Messages(req.db); 
 
     await message.getAllMessages()
     .then ((result) => {

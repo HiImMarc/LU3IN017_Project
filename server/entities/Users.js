@@ -1,14 +1,14 @@
 const { ObjectId } = require('mongodb');
 
 class Users {
-	constructor(database) {
-		this.database = database
+	constructor(db) {
+		this.db = db
 	}
 
 	createUser(login, password, name, lastname) {
 		return new Promise( async (resolve, reject) => {
 
-			const exists = await this.database.db('Birdy').collection('Users').findOne({login})
+			const exists = await this.db.collection('Users').findOne({login})
 			.catch ((error) => {
 				console.log(error);
 			})
@@ -19,7 +19,7 @@ class Users {
 				resolve("login already exists");
 
 			} else {
-				this.database.db('Birdy').collection('Users')
+				this.db.collection('Users')
 				.insertOne({ login, password, name, lastname }, (error, result) => {
 					if (error) {
 						reject(error);
@@ -34,7 +34,7 @@ class Users {
 
 	login(login, password) {
 		return new Promise((resolve, reject) => {
-			const result = this.database.db('Birdy').collection('Users').findOne({
+			const result = this.db.collection('Users').findOne({
 				login : {$eq : login},
 				password : {$eq : password}
 			});
@@ -53,7 +53,7 @@ class Users {
 
 	getInfo(id) {
 		return new Promise( (resolve, reject) => {
-			const result = this.database.db('Birdy').collection('Users').findOne(
+			const result = this.db.collection('Users').findOne(
 				{ _id : new ObjectId(id) }
 			)
 			if (result) {

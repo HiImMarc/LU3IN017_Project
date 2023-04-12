@@ -3,12 +3,11 @@ class Messages {
         this.db = db
     }
     
-
     createMessage(authorid, name, lastname, pseudo, content){
         console.log("dans createMessage : ", authorid,content)
 
         return new Promise( (resolve, reject) => {
-            this.db.db('Birdy').collection('Messages')
+            this.db.collection('Messages')
             .insertOne({
                 authorid,
                 name,
@@ -30,7 +29,7 @@ class Messages {
 
     getAllMessages(){
         return new Promise( (resolve, reject) => {
-            this.db.db('Birdy').collection('Messages').find().toArray()
+            this.db.collection('Messages').find().toArray()
             .then ( (res) => {
                 if (res) {
                     resolve(res)
