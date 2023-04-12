@@ -24,6 +24,6 @@ async function connectToDB() {
 	return client;
 }
 
-connectToDB().catch(console.error)
+process.on('SIGINT', () => client.close()); // Quand il y a une IT (genre ctrl c) on ferme la database
 
 module.exports = connectToDB;
