@@ -12,7 +12,9 @@ export default function MessageList(props) {
         {messages.map((item, index)=> (
           <Message 
           key={index}
+          msgid={item._id.toString()}
           authorid={item.authorid}
+          userid={props.userid}
           name={item.name}
           lastname={item.lastname}
           pseudo={item.pseudo}

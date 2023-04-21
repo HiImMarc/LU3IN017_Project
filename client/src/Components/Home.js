@@ -49,6 +49,7 @@ function Home(props) {
 
     return (
         <div className="home">
+            
             <header>
                 <div className='logo'>
                     <img className='concreteLogo'src={Logo}/>

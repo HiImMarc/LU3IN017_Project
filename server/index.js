@@ -6,7 +6,7 @@ const session = require('express-session') // J'ai pas compris c'est quoi encore
 app.use(express.json());
 app.use(cors()) // Je sais pas si c'est nécessaire mais ça a réglé un problème au tout début je crois ?
 
-const router = require('./app')
+const router = require('./api')
 app.use('/', router);
 
 app.listen(8000, () => { console.log("Serveur écoute port 8000")})

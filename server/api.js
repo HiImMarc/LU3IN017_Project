@@ -11,6 +11,7 @@ const dbMiddleware = async (req, res, next) => { // Fonction pour donner une ins
     try {
       const client = await connectToDB();
       req.db = client.db('Birdy');
+      process.on('SIGINT', () => client.close()); // Quand il y a une IT (genre ctrl c) on ferme la database
       next();
     } catch (err) {
       console.error(err);
@@ -96,7 +97,15 @@ router.get("/messages",async function(req, res) {
 
 }) // Récupère tout les messages
 
+router.patch("/messages/like", async function(req,res) {
+    const message = new Messages(req.db);
+    console.log("/messages/like : ", req.body.userid,req.body.msgid)
+    await message.addLike(req.body.userid, req.body.msgid)
+    .then((result) => {
+        res.send(result)
+    })
 
+})
 
 /*
 router.delete("/users/delete/:userid", Users.logout) // Supprime un compte
