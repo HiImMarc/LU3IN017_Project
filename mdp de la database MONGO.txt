@@ -1,0 +1,6 @@
+SmULTvk892Nid9ct
+
+mongodb+srv://admin:<password>@birdy.hdf5l2g.mongodb.net/?retryWrites=true&w=majority
+
+
+1tz5QiodbevzhJja
