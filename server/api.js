@@ -77,7 +77,6 @@ router.post("/messages/new", async function(req, res) {
             res.send('erreur lors de création message')
         }
     })
-
 }) // Crée un message
 
 router.get("/messages",async function(req, res) {
@@ -104,8 +103,21 @@ router.patch("/messages/like", async function(req,res) {
     .then((result) => {
         res.send(result)
     })
+}) // Ajoute / Supprime  un like
 
-})
+router.get("/messages/:msgid/likes", async function(req,res) {
+    const message = new Messages(req.db);
+    console.log("truc 1 :", req.params.msgid)
+    const result = await message.getLikes(req.params.msgid)
+}) // Récupère le nombre de likes d'un message
+
+router.patch("/messages/comment/new", async function(req,res) {
+    const message = new Messages(req.db);
+    await message.addComment(req.body.msgid, req.body.authorid, req.body.content)
+    .then((result) => {
+        res.send(result)
+    })
+}) // Ajoute un commentaire à un message
 
 /*
 router.delete("/users/delete/:userid", Users.logout) // Supprime un compte

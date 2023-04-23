@@ -46,11 +46,6 @@ class Users {
 		});
 	}
 
-
-	getId() {
-
-	}
-
 	getInfo(id) {
 		return new Promise( (resolve, reject) => {
 			const result = this.db.collection('Users').findOne(

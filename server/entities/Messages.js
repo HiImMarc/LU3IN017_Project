@@ -43,6 +43,21 @@ class Messages {
         })
     }
 
+    getLikes(msgid) {
+        return new Promise( (resolve,reject) => {
+            this.db.collection('Messages').findOne({
+                _id : {$eq : new ObjectId(msgid)}
+            })
+            .then( (message) => {
+                console.log("message : ",message)
+                if (message) {
+                    resolve(message.likes.length)
+                }
+            })
+            .catch( (err) => console.error(err))
+        })
+    }
+
     addLike(userid, msgid) {
         return new Promise( (resolve, reject) => {
             this.db.collection('Messages').findOne({
@@ -89,6 +104,29 @@ class Messages {
                 }
             })
 
+        })
+    }
+
+    addComment(msgid,authorid,content) {
+        return new Promise( (resolve,reject) => {
+            newcomment = {
+                authorid : authorid,
+                content : content
+            }
+            this.db.collection('Messages').updateOne({
+                _id: new ObjectId(msgid)
+            }, {
+                $set: { comments: [... newcomment]}
+            })
+            .then(() => {
+                resolve({ 
+                    message: 'comment added',
+                    comment: newcomment,
+                });
+            })
+            .catch((err) => {
+                reject(err);
+            });
         })
     }
 
