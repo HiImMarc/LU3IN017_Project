@@ -20,11 +20,9 @@ export default function SideBar(props){
 
     return (
         <div className="sidebar">
-            <button className='button-accueil'>Accueil</button>
-            <button className='button-friends'>Friends</button>
-
-            <Link to='/home/profile' userid={props.userid} setUserId={props.setUserId}> My Profile</Link>
-            <button className='button-myprofile'>My Profile</button>
+            <button className='button-accueil' onClick={() => props.changePage("accueil")}>Accueil</button>
+            <button className='button-friends' onClick={() => props.changePage("friendlist")}>Friends</button>
+            <button className='button-myprofile' onClick={() => props.changePage("myprofile")}>My Profile</button>
 
 
             <button onClick={openMessageForm}>Nouveau Message</button>

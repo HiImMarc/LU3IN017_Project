@@ -1,11 +1,7 @@
 import {useEffect, useState} from 'react';
 import React from 'react';
-import Logo from '../Image/Logo.png'
-import SearchBar from './SearchBar'
-import MessageList from './MessageList';
-import SideBar from './SideBar';
-import './Home.css'
 import './Profile.css'
+import MessageList from './MessageList';
 
 export default function Profile(props) {
     
@@ -21,41 +17,19 @@ export default function Profile(props) {
         item.body.toLowerCase().includes(searchInput.toLowerCase())
     );
 
-    function handleSearch(input){
-        setSearchInput(input);
-    }
-
     function getMessageData(){
         fetch('https://jsonplaceholder.typicode.com/posts')
         .then (response => response.json())
         .then(data => setMessageData(data))
     }
 
-    console.log('Home : isConnected',props.isConnected)
-
     return (
-        <div className="home">
-            <header>
-                <div className='logo'>
-                    <img className='concreteLogo'src={Logo}/>
-                </div>
-                <div className='searchBar'>
-                    <SearchBar onSearch={handleSearch}/>
-                </div>
-                <div className='miniprofile'>User Profile</div>
-            </header>
-
             <div className="core">
                 <div className='profile'>MON PRFOL AFFICHE EST ICI</div>
                 <br/>
-                <div  className="messageList">
-                    <MessageList userID={props.userID} isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput}/>
-                </div>
-                <div className="sideBar">
-                    <SideBar isConnected={props.isConnected} logout={props.logout} login={props.login} />
+                <div className='mymessages'>
+                    <MessageList isConnected={props.isConnected} data={props.data} searchInput={props.searchInput} userid={props.userid} setUserId={props.setUserId}/>
                 </div>
             </div>
-
-        </div>
     );
 }

@@ -19,6 +19,8 @@ export default function MessageList(props) {
           lastname={item.lastname}
           pseudo={item.pseudo}
           content={item.content} 
+          likes={item.likes}
+          comments={item.comments}
           />
         ))}
       </ul>)

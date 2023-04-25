@@ -7,7 +7,7 @@ const connectToDB = require('./database/database')
 const jwt = require('jsonwebtoken')
 
 
-const dbMiddleware = async (req, res, next) => { // Fonction pour donner une instance de la database à mes routes
+const getDB = async (req, res, next) => { // Fonction pour donner une instance de la database à mes routes
     try {
       const client = await connectToDB();
       req.db = client.db('Birdy');
@@ -18,28 +18,19 @@ const dbMiddleware = async (req, res, next) => { // Fonction pour donner une ins
       res.status(500).send('Erreur interne du serveur');
     }
 };
-router.use(dbMiddleware);
-
+router.use(getDB);
 
 router.post("/users/new", async function(req,res){
-    // const client = await connectToDB();
-    // const user = new Users(client)
     const user = new Users(req.db)
     const result = await user.createUser(req.body.login, req.body.password, req.body.name, req.body.lastname)
     res.send(result);
 }) // Crée un compte
 
 router.get("/login", async function(req, res) {
-
-    console.log("sjqkdlsq : ", req.query.login, req.query.password)
-
-    // const client = await connectToDB();
-    // const user = new Users(client)
     const user = new Users(req.db)
     const result = await user.login(req.query.login, req.query.password);
     if (result) {
         const token = jwt.sign({id : result._id},'key');
-        console.log("le token ? : ", token)
         res.send({ _id: result._id, token: token });
     } else {
         res.send("wrong password or login")
@@ -47,14 +38,8 @@ router.get("/login", async function(req, res) {
 }) // Se connecte à un compte (en réalité retourne juste l'id du connecté, la connexion se fera dans le côté front)
 
 router.get("/users/id/infos/:user", async function(req, res){
-    // const client = await connectToDB();
-    // const user = new Users(client); 
     const user = new Users(req.db)
-
-    console.log("DANS LAPP MON ID EST EGAL A ", req.query.id)
-
     const id = req.query.id // On récupère l'id de l'user connecté
-
     const result = await user.getInfo(id);
     if (result){
         res.send(result);
@@ -64,11 +49,7 @@ router.get("/users/id/infos/:user", async function(req, res){
 }) // Récupère les infos d'un user
 
 router.post("/messages/new", async function(req, res) {
-    // const client = await connectToDB();
-    // const message = new Messages(client); 
     const message = new Messages(req.db); 
-    console.log("dans app : userid et content : ", req.body.id, req.body.content)
-
     await message.createMessage(req.body.id, req.body.name, req.body.lastname, req.body.pseudo, req.body.content)
     .then ((result) => {
         if (result) {
@@ -80,8 +61,6 @@ router.post("/messages/new", async function(req, res) {
 }) // Crée un message
 
 router.get("/messages",async function(req, res) {
-    // const client = await connectToDB();
-    // const message = new Messages(client); 
     const message = new Messages(req.db); 
 
     await message.getAllMessages()
@@ -98,7 +77,6 @@ router.get("/messages",async function(req, res) {
 
 router.patch("/messages/like", async function(req,res) {
     const message = new Messages(req.db);
-    console.log("/messages/like : ", req.body.userid,req.body.msgid)
     await message.addLike(req.body.userid, req.body.msgid)
     .then((result) => {
         res.send(result)
@@ -107,17 +85,34 @@ router.patch("/messages/like", async function(req,res) {
 
 router.get("/messages/:msgid/likes", async function(req,res) {
     const message = new Messages(req.db);
-    console.log("truc 1 :", req.params.msgid)
-    const result = await message.getLikes(req.params.msgid)
+    await message.getLikes(req.params.msgid)
+    .then( (result) => res.send(result))
 }) // Récupère le nombre de likes d'un message
 
 router.patch("/messages/comment/new", async function(req,res) {
     const message = new Messages(req.db);
-    await message.addComment(req.body.msgid, req.body.authorid, req.body.content)
+    await message.addComment(req.body.msgid,req.body.userid, req.body.lastname, req.body.name, req.body.pseudo, req.body.content)
     .then((result) => {
+        console.log("/messages/comment/new/ : ",result)
         res.send(result)
     })
+    .catch( (err) => {
+        console.log("erreur dans api : ", err)
+    })
 }) // Ajoute un commentaire à un message
+
+router.delete("/messages/delete", async function(req,res){
+    const message = new Messages(req.db)
+    console.log("delete : ",req.query.msgid)
+    await message.deleteMessage(req.query.msgid)
+    .then( (result) => {
+        res.send(result)
+    })
+    .catch( (err) => {
+        console.log(err)
+    })
+})
+
 
 /*
 router.delete("/users/delete/:userid", Users.logout) // Supprime un compte

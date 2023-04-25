@@ -48,6 +48,17 @@ header {
   background-color: #2270b9;
   border-color: aqua;
 }
+.myprofile{
+  flex: 1;
+  background-color: #2270b9;
+  border-color: aqua;
+}
+.friendlist{
+  flex: 1;
+  background-color: #2270b9;
+  border-color: aqua;
+}
+
 
 .sideBar {
   flex: 0 0 300px;

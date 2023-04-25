@@ -24,11 +24,12 @@ function MessageForm(props) {
             pseudo : props.pseudo,
             content : message
         })
-        .then ( (res) => {
-            props.updateMessages();
+        .then ( () => {
+            props.updateMessages()
         })
-
+        .catch ((err)=> console.log(err))
     }
+
 
   return (
     <div className= {showhideclassName}> {/* Dans le css on controle l'affichage */}
