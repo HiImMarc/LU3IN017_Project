@@ -1,5 +1,4 @@
-.core {
-    display: flex;
-    flex-direction: row;
-    background-color: purple;
+.main {
+    flex : 1;
+    overflow-y: scroll;
 }

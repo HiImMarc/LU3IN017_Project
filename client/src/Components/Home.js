@@ -77,21 +77,21 @@ function Home(props) {
 
             <div className="core">
 
-                {page=="accueil" ? 
+                {page==="accueil" ? 
                     <div  className="messageList">
                     <MessageList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
                     </div>
                     :
                     <></>
                 }
-                {page=="myprofile" ? 
-                    <div  className="myprofile">
-                        <Profile isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
+                {page==="myprofile" ? 
+                    <div className='myprofile'>
+                    <Profile lastname={props.lastname} name={props.name} pseudo={props.pseudo} isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
                     </div>
                     :
                     <></>
                 }
-                {page=="friendlist" ? 
+                {page==="friendlist" ? 
                     <div className='friendlist'>
                         <FriendList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
                     </div>

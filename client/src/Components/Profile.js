@@ -4,32 +4,26 @@ import './Profile.css'
 import MessageList from './MessageList';
 
 export default function Profile(props) {
+
     
-    //Etats pour la gestion des messages
-    const [messageData, setMessageData] = useState([]);
-    const [searchInput, setSearchInput] = useState("");
 
-    useEffect(getMessageData, [])
-
-    // Filtrer le tableau de messages en fonction de la valeur de recherche
-    const filteredMessages = messageData.filter(item =>
-        item.title.toLowerCase().includes(searchInput.toLowerCase()) ||
-        item.body.toLowerCase().includes(searchInput.toLowerCase())
-    );
-
-    function getMessageData(){
-        fetch('https://jsonplaceholder.typicode.com/posts')
-        .then (response => response.json())
-        .then(data => setMessageData(data))
-    }
 
     return (
-            <div className="core">
-                <div className='profile'>MON PRFOL AFFICHE EST ICI</div>
+        <div className='myprofile'>
+            <div className='profile'>
+                {props.pseudo}
                 <br/>
-                <div className='mymessages'>
-                    <MessageList isConnected={props.isConnected} data={props.data} searchInput={props.searchInput} userid={props.userid} setUserId={props.setUserId}/>
-                </div>
+                {props.name}
+                <br/>
+                {props.lastname}
+                <br/>
+                {}
+                {}
             </div>
-    );
+            <br/>
+            <div className='mymessages'>
+            here    
+            </div>
+        </div>
+      )
 }
