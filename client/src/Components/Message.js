@@ -22,7 +22,6 @@ export default function Message(props) {
 
 	async function handleLike() {
 		try {
-			console.log("axios : ", props.userid, props.msgid)
 			await axios.patch("http://localhost:8000/messages/like", {
 				userid: props.userid,
 				msgid: props.msgid
@@ -61,7 +60,7 @@ export default function Message(props) {
 					<button onClick={handleDeleteMessage}>delete</button>	
 					) 
 					:
-					<></>}
+					<button>Follow this guy</button>}
 				</h2>
 				<p>{props.content}</p>
 				<br />

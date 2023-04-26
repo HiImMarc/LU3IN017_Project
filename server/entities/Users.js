@@ -20,15 +20,16 @@ class Users {
 
 			} else {
 				this.db.collection('Users')
-				.insertOne({ login, password, name, lastname }, (error, result) => {
-					if (error) {
-						reject(error);
+				.insertOne({ login, password, name, lastname, friends:[] })
+				.then ( (res) => {
+					if (res) {
+						resolve(res)
 					} else {
-						resolve(result.insertedId)
+						reject("createUser-error")
 					}
-				});
+				})
 			}
-		});
+		})
 	}
 
 
@@ -54,7 +55,7 @@ class Users {
 			if (result) {
 				resolve(result);
 			} else {
-				reject("error getInfo");
+				reject("getInfo-error");
 			}
 		})
 	}

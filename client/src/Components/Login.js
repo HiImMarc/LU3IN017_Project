@@ -82,7 +82,7 @@ export default function Login(props) {
                 </form>
             </div>
 
-            <Link className='tosignup' to='/signup'>Déjà inscrit ? Connectez vous ici</Link>
+            <Link className='tosignup' to='/signup'>Pas de compte ? Inscrivez vous ici</Link>
         </div>
     );
 }

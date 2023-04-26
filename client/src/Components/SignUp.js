@@ -2,6 +2,7 @@ import {useState} from 'react';
 import './SignUp.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
 
 export default function SignUp(props){
 
@@ -10,6 +11,7 @@ export default function SignUp(props){
     const [name, setName] = useState("");
     const [lastname, setLastName] = useState("");
 
+    const navigate = useNavigate();
 
     function getLogin(event){
         setLogin(event.target.value);
@@ -36,14 +38,13 @@ export default function SignUp(props){
                     console.log("CE LOGIN EXISTE DEJA");
                 } else {
                     console.log("Utilisateur : ",login," a été crée avec succès !")
+                    navigate("/login");
                 }
             })
         } catch (err){
             console.log(err)
         }
     }
-
-
 
     return (
         <div className='main'>
@@ -62,7 +63,7 @@ export default function SignUp(props){
                     </button><button type="reset">Annuler</button>
                 </form>
             </div>
-            <Link className='tologin' to='/login'>Pas de compte ? Inscrivez vous ici</Link>
+            <Link className='tologin' to='/login'>Déjà inscrit ? Connectez vous ici</Link>
 
         </div>
     );

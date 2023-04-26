@@ -26,6 +26,7 @@ router.post("/users/new", async function(req,res){
     res.send(result);
 }) // Crée un compte
 
+
 router.get("/login", async function(req, res) {
     const user = new Users(req.db)
     const result = await user.login(req.query.login, req.query.password);
@@ -37,9 +38,10 @@ router.get("/login", async function(req, res) {
     }
 }) // Se connecte à un compte (en réalité retourne juste l'id du connecté, la connexion se fera dans le côté front)
 
-router.get("/users/id/infos/:user", async function(req, res){
+router.get("/users/id/infos", async function(req, res){
     const user = new Users(req.db)
-    const id = req.query.id // On récupère l'id de l'user connecté
+    console.log("qdjskqldjsqkldjsq",req.query.userid)
+    const id = req.query.userid // On récupère l'id de l'user connecté
     const result = await user.getInfo(id);
     if (result){
         res.send(result);

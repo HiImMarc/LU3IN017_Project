@@ -7,6 +7,11 @@ function CommentForm(props) {
 
     const[comment, setComment] = useState("");
 
+    const [lastname,setLastName] =  useState("");
+    const [name,setName] =  useState("");
+    const [pseudo,setPseudo] =  useState("");
+
+
     function setComment2(event){
         setComment(event.target.value);
     }
@@ -17,23 +22,37 @@ function CommentForm(props) {
     async function submitComment(e) {
         e.preventDefault();
 
-        await axios.patch("http://localhost:8000/messages/comment/new", {
-            msgid: props.msgid,
-            userid : props.userid,
-            lastname : props.lastname,
-            name : props.name,
-            pseudo : props.pseudo,
-            content : comment
+        await axios.get("http://localhost:8000/users/id/infos", {
+            params:{
+                userid: props.userid
+            }
         })
-        .then ( (res) => {
-            console.log("res from submitComment : ",res)
-            props.closeCommentForm()
-            window.location.reload(false)
+        .then ( async (response) => {
+            const authorLastname = response.data.lastname
+            const authorName = response.data.name
+            const authorPseudo = response.data.pseudo
+            console.log("les params de mon commentaire : ",authorLastname,authorName,authorPseudo)
+            await axios.patch("http://localhost:8000/messages/comment/new", {
+                msgid: props.msgid,
+                userid : props.userid,
+                lastname : authorLastname,
+                name : authorName,
+                pseudo : authorPseudo,
+                content : comment
+            })
+            .then ( (res) => {
+                console.log("res from submitComment : ",res)
+                props.closeCommentForm()
+                window.location.reload(false)
+            })
         })
+        .catch ((err) => console.log("error commentForm",err))
+
+
 
     }
 
-  return (
+    return (
     <div className= {showhideclassName}> {/* Dans le css on controle l'affichage */}
         <section className='main'>
             <button className="close" onClick={props.closeCommentForm}>
