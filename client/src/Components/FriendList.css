@@ -1,0 +1,14 @@
+.FriendListMain {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+  
+.FriendRequests {
+    flex-basis: 50%;
+}
+
+.FriendList {
+    flex-basis: 50%;
+    border-left: 1px solid black;
+}

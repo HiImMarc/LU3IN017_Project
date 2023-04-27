@@ -86,7 +86,7 @@ function Home(props) {
                 }
                 {page==="myprofile" ? 
                     <div className='myprofile'>
-                    <Profile lastname={props.lastname} name={props.name} pseudo={props.pseudo} isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
+                    <Profile lastname={props.lastname} name={props.name} pseudo={props.pseudo} isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} watcherid={props.userid} setUserId={props.setUserId}/>
                     </div>
                     :
                     <></>

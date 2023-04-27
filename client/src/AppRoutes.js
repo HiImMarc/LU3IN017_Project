@@ -35,9 +35,9 @@ export default function AppRoutes() {
       const id = getUserIdFromToken(token)
       setId(id)
       setConnect(true)
-      axios.get("http://localhost:8000/users/id/infos/:user", {
+      axios.get("http://localhost:8000/users/id/infos/", {
         params: {
-          id: id
+          userid: id
         }
       })
       .then ( (res) => {

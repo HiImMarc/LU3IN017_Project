@@ -26,7 +26,6 @@ router.post("/users/new", async function(req,res){
     res.send(result);
 }) // Crée un compte
 
-
 router.get("/login", async function(req, res) {
     const user = new Users(req.db)
     const result = await user.login(req.query.login, req.query.password);
@@ -49,6 +48,13 @@ router.get("/users/id/infos", async function(req, res){
         res.send("erreur lors de getInfos");
     }
 }) // Récupère les infos d'un user
+
+router.post("/friends/invitation", async function(req, res){
+    const friend = new Friends(req.db)
+    await friend.askFriend(req.body.from, req.body.to)
+    .then ((result) => res.send(result))
+    .catch((err) => console.log(err))
+})
 
 router.post("/messages/new", async function(req, res) {
     const message = new Messages(req.db); 

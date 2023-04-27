@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import CommentForm from './CommentForm'
 import Comment from './Comment';
+import PopupProfile from './PopupProfile';
 
 export default function Message(props) {
 	const [likecount, setlikecount] = useState(props.likes.length);
@@ -19,6 +20,15 @@ export default function Message(props) {
 	function handleOpenComments() {
 		setOpenComments(!openComments)
 	}
+
+    const [showPopupProfile, setShowPopupProfile] = useState(false);
+    function closePopupProfile() {
+        setShowPopupProfile(false)
+    }
+    function openPopupProfile() {
+        setShowPopupProfile(true)
+    }
+
 
 	async function handleLike() {
 		try {
@@ -60,7 +70,9 @@ export default function Message(props) {
 					<button onClick={handleDeleteMessage}>delete</button>	
 					) 
 					:
-					<button>Follow this guy</button>}
+					<button onClick={openPopupProfile}>Voir Profil</button>}
+					<PopupProfile showPopupProfile={showPopupProfile} closePopupProfile={closePopupProfile} userid={props.userid}
+					name={props.name} lastname={props.lastname} pseudo={props.pseudo} authorid={props.authorid}/>
 				</h2>
 				<p>{props.content}</p>
 				<br />

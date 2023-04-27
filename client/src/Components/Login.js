@@ -40,15 +40,17 @@ export default function Login(props) {
                     localStorage.setItem('token', res.data.token)
                     navigate('/')
                     props.login()
-                    return res[0].data  // On a besoin de l'id pour récup les info de l'user
+                    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",res.data._id)
+                    return res.data._id  // On a besoin de l'id pour récup les info de l'user
                 }
             })
             //On récupère les infos de l'user
             .then ( async (res) => {
                 if (res){
-                    await axios.get("http://localhost:8000/users/id/infos/:user", {
+                    console.log("RESSSSS",res)
+                    await axios.get("http://localhost:8000/users/id/infos", {
                         params: {
-                            id : res
+                            userid: res
                         }
                     })
                     .then( (res) => {
