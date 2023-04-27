@@ -49,13 +49,6 @@ router.get("/users/id/infos", async function(req, res){
     }
 }) // Récupère les infos d'un user
 
-router.post("/friends/invitation", async function(req, res){
-    const friend = new Friends(req.db)
-    await friend.askFriend(req.body.from, req.body.to)
-    .then ((result) => res.send(result))
-    .catch((err) => console.log(err))
-})
-
 router.post("/messages/new", async function(req, res) {
     const message = new Messages(req.db); 
     await message.createMessage(req.body.id, req.body.name, req.body.lastname, req.body.pseudo, req.body.content)
@@ -119,7 +112,23 @@ router.delete("/messages/delete", async function(req,res){
     .catch( (err) => {
         console.log(err)
     })
-})
+}) // Supprime un message avec l'id msgid
+
+router.post("/friends/invitation", async function(req,res){
+    const friend = new Friends(req.db)
+    console.log("friends/invitation",req.body.from, req.body.to, req.body.message)
+    await friend.sendFriendRequest(req.body.from, req.body.to, req.body.message)
+    .then ( (result) => res.send(result))
+    .catch ((error)=> console.log(error))
+}) // Envoie une demande d'ami avec un message de from à to
+
+router.get("/friends/getTo", async function(req,res){
+    const friend = new Friends(req.db)
+    console.log("/friends/getTo : ",req.query.userid)
+    await friend.getFriendRequestsTo(req.query.userid)
+    .then ( (result) => res.send(result))
+    .catch ((error)=> console.log(error))
+}) // Envoie une demande d'ami avec un message de from à to
 
 
 /*
