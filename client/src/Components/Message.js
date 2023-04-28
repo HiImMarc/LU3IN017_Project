@@ -8,26 +8,26 @@ import PopupProfile from './PopupProfile';
 export default function Message(props) {
 	const [likecount, setlikecount] = useState(props.likes.length);
 
-    const [showCommentForm, setShowCommentForm] = useState(false);
-    function closeCommentForm() {
-        setShowCommentForm(false)
-    }
-    function openCommentForm() {
-        setShowCommentForm(true)
-    }
+	const [showCommentForm, setShowCommentForm] = useState(false);
+	function closeCommentForm() {
+		setShowCommentForm(false)
+	}
+	function openCommentForm() {
+		setShowCommentForm(true)
+	}
 
 	const [openComments, setOpenComments] = useState(false)
 	function handleOpenComments() {
 		setOpenComments(!openComments)
 	}
 
-    const [showPopupProfile, setShowPopupProfile] = useState(false);
-    function closePopupProfile() {
-        setShowPopupProfile(false)
-    }
-    function openPopupProfile() {
-        setShowPopupProfile(true)
-    }
+	const [showPopupProfile, setShowPopupProfile] = useState(false);
+	function closePopupProfile() {
+		setShowPopupProfile(false)
+	}
+	function openPopupProfile() {
+		setShowPopupProfile(true)
+	}
 
 
 	async function handleLike() {
@@ -37,9 +37,9 @@ export default function Message(props) {
 				msgid: props.msgid
 
 			})
-			.then((res) => {
-				setlikecount(res.data.likeCount)
-			})
+				.then((res) => {
+					setlikecount(res.data.likeCount)
+				})
 		} catch (err) {
 			console.log(err)
 		}
@@ -49,16 +49,16 @@ export default function Message(props) {
 		try {
 			await axios.delete("http://localhost:8000/messages/delete", {
 				params: {
-					msgid : props.msgid
+					msgid: props.msgid
 				}
 			})
-			.then ((res) => {
-				console.log("delete message success",res)
-				window.location.reload(false)
-			})
-			.catch ((err)=> console.log(err))
+				.then((res) => {
+					console.log("delete message success", res)
+					window.location.reload(false)
+				})
+				.catch((err) => console.log(err))
 		} catch (err) {
-			console.log("dans le try catch",err)
+			console.log("dans le try catch", err)
 		}
 	}
 
@@ -67,37 +67,37 @@ export default function Message(props) {
 			<li>
 				<h2>{props.name} {props.lastname} | @{props.pseudo}
 					{props.userid == props.authorid ? (
-					<button onClick={handleDeleteMessage}>delete</button>	
-					) 
-					:
-					<button onClick={openPopupProfile}>Voir Profil</button>}
-					<PopupProfile showPopupProfile={showPopupProfile} closePopupProfile={closePopupProfile} userid={props.userid}
-					name={props.name} lastname={props.lastname} pseudo={props.pseudo} authorid={props.authorid}/>
+						<button onClick={handleDeleteMessage}>delete</button>
+					)
+						:
+						<button onClick={openPopupProfile}>Voir Profil</button>}
+						<PopupProfile showPopupProfile={showPopupProfile} closePopupProfile={closePopupProfile} userid={props.userid}
+						name={props.name} lastname={props.lastname} pseudo={props.pseudo} authorid={props.authorid} />
 				</h2>
 				<p>{props.content}</p>
 				<br />
 				<button type='submit' onClick={handleLike}>J'aime</button><label>{likecount}</label>
-				<br/>
+				<br />
 				<button onClick={openCommentForm}>ecrire un commentaire</button>
 				<CommentForm showCommentForm={showCommentForm} closeCommentForm={closeCommentForm} openCommentForm={openCommentForm} msgid={props.msgid}
-				userid={props.userid} lastname={props.lastname} name={props.name} pseudo={props.pseudo}/>
-				<br/>
+					userid={props.userid} lastname={props.lastname} name={props.name} pseudo={props.pseudo} />
+				<br />
 				<div className='comment-dropdown'>
 					<button onClick={handleOpenComments}>commentaires</button>
-					{ openComments ? 
-					(props.comments.map((item, index)=> (
-						<Comment 
-						key={index}
-						authorid={item.authorid}
-						userid={props.userid}
-						name={item.name}
-						lastname={item.lastname}
-						pseudo={item.pseudo}
-						content={item.content} 
-						/>
-					  )))
-					:
-					<></>}
+					{openComments ?
+						(props.comments.map((item, index) => (
+							<Comment
+								key={index}
+								authorid={item.authorid}
+								userid={props.userid}
+								name={item.name}
+								lastname={item.lastname}
+								pseudo={item.pseudo}
+								content={item.content}
+							/>
+						)))
+						:
+						<></>}
 				</div>
 			</li>
 		</div>
