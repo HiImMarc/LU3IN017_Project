@@ -17,6 +17,9 @@ function Home(props) {
         setPage(page)
     }
 
+    // Pour le switch entre mes messages/tout les messages/messages de mes amis seulement
+    const [filter, setFilter] = useState('all');
+
 
     //Etats pour la gestion des messages
     const [messageData, setMessageData] = useState([]);
@@ -25,13 +28,31 @@ function Home(props) {
     useEffect(getMessagesData,[])
 
     // Filtrer le tableau de messages en fonction de la valeur de recherche
-    let filteredMessages = messageData.filter(item =>
+    const filteredMessages = messageData.filter(item => 
         (searchInput.trim() === "") ||
         item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
         item.content.toLowerCase().includes(searchInput.toLowerCase()) ||
         item.lastname.toLowerCase().includes(searchInput.toLowerCase()) ||
         item.pseudo.toLowerCase().includes(searchInput.toLowerCase())
     );
+    let messagesList = null;
+    switch (filter) {
+        case 'all':
+            messagesList = filteredMessages;
+            break;
+        case 'me':
+            messagesList = filteredMessages.filter(item => item.authorid === props.userid);
+            break;
+        case 'friends':
+            // const user = props.users.find(user => user.id === props.userid);
+            // const friendIds = user.friends;
+            // messagesList = filteredMessages.filter(item => friendIds.includes(item.userid));
+            break;
+        default:
+            messagesList = filteredMessages;
+            break;
+    }
+
 
     function handleSearch(input){
         setSearchInput(input);
@@ -41,13 +62,11 @@ function Home(props) {
         axios.get("http://localhost:8000/messages")
         .then ( (res) => {
             setMessageData(res.data)
-            console.log("LA DATA MESSAGE RETURNED EST :", res.data)
-            console.log("LA DATA MESSAGE EST :", messageData)            
+            console.log("LA DATA MESSAGE RETURNED EST :", res.data)         
         })
         .catch(error => console.log(error))
 
     }
-
 
     console.log('Home : isConnected',props.isConnected)
     console.log("MON ID est : ", props.userid);
@@ -77,9 +96,12 @@ function Home(props) {
 
             <div className="core">
 
-                {page==="accueil" ? 
-                    <div  className="messageList">
-                    <MessageList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
+                {page === "accueil" ?
+                    <div className="messageList">
+                        <button onClick={() => setFilter('all')}>Tous les messages</button>
+                        <button onClick={() => setFilter('me')}>Mes messages</button>
+                        <button onClick={() => setFilter('friends')}>Messages d'amis</button>
+                    <MessageList isConnected={props.isConnected} data={messagesList} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId}/>
                     </div>
                     :
                     <></>

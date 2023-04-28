@@ -4,6 +4,7 @@ import Message from './Message';
 export default function MessageList(props) {
 
   const messages = props.data
+  console.log("messages dans MessageList : ",messages)
 
   return (
     <div className='messagelist'>

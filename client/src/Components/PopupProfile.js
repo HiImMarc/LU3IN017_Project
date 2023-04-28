@@ -28,7 +28,11 @@ export default function PopupProfile(props) {
             <PopupFriendRequest closePopupFriendRequest={closePopupFriendRequest} showPopupFriendRequest={showPopupFriendRequest} 
             userid={props.userid} name={props.name} lastname={props.lastname} pseudo={props.pseudo} authorid={props.authorid}/>
             <div className='profile'>
-                profile of {props.authorid}/
+                <div >profile of {props.authorid}</div>
+                <div>name : {props.name} </div>
+                <div>lastname : {props.lastname}</div>
+                <div>friend count : </div>
+                <div>message count : </div>
             </div>
         </section>
     </div>

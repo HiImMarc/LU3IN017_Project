@@ -15,7 +15,7 @@ async function connectToDB() {
 
 	try {
 		await client.connect();
-		await listDatabases(client);
+		//await listDatabases(client);
 
 	} catch (e) {
 		console.error(e);

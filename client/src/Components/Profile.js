@@ -5,8 +5,6 @@ import MessageList from './MessageList';
 
 export default function Profile(props) {
 
-    
-
 
     return (
         <div className='myprofile'>
@@ -22,7 +20,7 @@ export default function Profile(props) {
             </div>
             <br/>
             <div className='mymessages'>
-            here    
+                here
             </div>
         </div>
       )

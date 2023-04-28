@@ -2,7 +2,7 @@ const router = require("express").Router()
 
 const Users = require("./entities/Users")
 const Messages = require("./entities/Messages")
-const Friends = require("./entities/Friends.js") // va être abandonné je crois ? Je vois pas comment implémenter ça
+const Friends = require("./entities/Friends.js")
 const connectToDB = require('./database/database')
 const jwt = require('jsonwebtoken')
 
@@ -39,7 +39,6 @@ router.get("/login", async function(req, res) {
 
 router.get("/users/id/infos", async function(req, res){
     const user = new Users(req.db)
-    console.log("qdjskqldjsqkldjsq",req.query.userid)
     const id = req.query.userid // On récupère l'id de l'user connecté
     const result = await user.getInfo(id);
     if (result){
@@ -79,9 +78,7 @@ router.get("/messages",async function(req, res) {
 router.patch("/messages/like", async function(req,res) {
     const message = new Messages(req.db);
     await message.addLike(req.body.userid, req.body.msgid)
-    .then((result) => {
-        res.send(result)
-    })
+    .then((result) => res.send(result))
 }) // Ajoute / Supprime  un like
 
 router.get("/messages/:msgid/likes", async function(req,res) {
@@ -93,42 +90,53 @@ router.get("/messages/:msgid/likes", async function(req,res) {
 router.patch("/messages/comment/new", async function(req,res) {
     const message = new Messages(req.db);
     await message.addComment(req.body.msgid,req.body.userid, req.body.lastname, req.body.name, req.body.pseudo, req.body.content)
-    .then((result) => {
-        console.log("/messages/comment/new/ : ",result)
-        res.send(result)
-    })
-    .catch( (err) => {
-        console.log("erreur dans api : ", err)
-    })
+    .then((result) => res.send(result))
+    .catch( (err) => console.log("erreur dans api : ", err))
 }) // Ajoute un commentaire à un message
 
 router.delete("/messages/delete", async function(req,res){
     const message = new Messages(req.db)
-    console.log("delete : ",req.query.msgid)
     await message.deleteMessage(req.query.msgid)
-    .then( (result) => {
-        res.send(result)
-    })
-    .catch( (err) => {
-        console.log(err)
-    })
+    .then( (result) => res.send(result))
+    .catch( (err) => console.log(err))
 }) // Supprime un message avec l'id msgid
 
 router.post("/friends/invitation", async function(req,res){
     const friend = new Friends(req.db)
-    console.log("friends/invitation",req.body.from, req.body.to, req.body.message)
     await friend.sendFriendRequest(req.body.from, req.body.to, req.body.message)
     .then ( (result) => res.send(result))
-    .catch ((error)=> console.log(error))
+    .catch ((error)=> console.error(error))
 }) // Envoie une demande d'ami avec un message de from à to
 
 router.get("/friends/getTo", async function(req,res){
     const friend = new Friends(req.db)
-    console.log("/friends/getTo : ",req.query.userid)
     await friend.getFriendRequestsTo(req.query.userid)
     .then ( (result) => res.send(result))
-    .catch ((error)=> console.log(error))
-}) // Envoie une demande d'ami avec un message de from à to
+    .catch ((error)=> console.error(error))
+}) // Récupère toute les demandes d'amis vers un userid
+
+router.delete("/friends/invitation/response", async function(req,res){
+    const friend = new Friends(req.db)
+    await friend.anwserRequest(req.query.accept, req.query.request)
+    .then ((result) => res.send(result))
+    .catch((err) => console.error(err))
+}) // Gère la réponse à une demande d'ami
+
+router.get("/friends/get", async function(req,res){
+    const friend = new Friends(req.db)
+    await friend.getFriends(req.query.userid)
+    .then ((result) => {
+        res.send(result)
+    })
+    .catch((err) => console.error(err))
+}) 
+
+router.delete("/friends/delete", async function(req,res){
+    const friend = new Friends(req.db)
+    await friend.deleteFriend(req.query.userid, req.query.friendid)
+    .then ((result) => res.send(result))
+    .catch((err) => console.error(err))
+})
 
 
 /*
