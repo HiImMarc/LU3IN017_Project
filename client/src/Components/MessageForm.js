@@ -6,11 +6,11 @@ import axios from 'axios';
 function MessageForm(props) {
 
     /*On récupère le message*/
-    const[message, setMessage] = useState("");
-    function setMessage2(event){
+    const [message, setMessage] = useState("");
+    function setMessage2(event) {
         setMessage(event.target.value);
     }
-    
+
     // Formulaire visible ou non
     const showhideclassName = props.showMessageForm ? "display-block" : "display-none"
 
@@ -18,33 +18,33 @@ function MessageForm(props) {
         e.preventDefault();
 
         await axios.post("http://localhost:8000/messages/new", {
-            id : props.userid,
-            name : props.name,
-            lastname : props.lastname,
-            pseudo : props.pseudo,
-            content : message
+            id: props.userid,
+            name: props.name,
+            lastname: props.lastname,
+            pseudo: props.pseudo,
+            content: message
         })
-        .then ( () => {
-            props.updateMessages()
-        })
-        .catch ((err)=> console.log(err))
+            .then(() => {
+                props.updateMessages()
+            })
+            .catch((err) => console.log(err))
     }
 
 
-  return (
-    <div className= {showhideclassName}> {/* Dans le css on controle l'affichage */}
-        <section className='main'>
-            <button className="close" onClick={props.closeMessageForm}>
-                &times; 
-            </button>
+    return (
+        <div className={showhideclassName}> {/* Dans le css on controle l'affichage */}
+            <section className='main'>
+                <button className="close" onClick={props.closeMessageForm}>
+                    &times;
+                </button>
                 <form className='form'>
-                    <input type="text" placeholder='Écrivez votre message ici...' onChange={setMessage2}/>
+                    <input type="text" placeholder='Écrivez votre message ici...' onChange={setMessage2} />
                     <button type="submit" onClick={submitMessage}>Envoyer !</button>
                 </form>
 
-        </section>
-    </div>
-  ) 
+            </section>
+        </div>
+    )
 }
 
 export default MessageForm

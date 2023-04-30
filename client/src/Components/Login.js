@@ -53,13 +53,13 @@ export default function Login(props) {
                                 userid: res
                             }
                         })
-                        .then((res) => {
-                            console.log("ON A REUSSI ? :", res.data.login, res.data.name, res.data.lastname)
-                            props.setUserInfo(res.data.login, res.data.name, res.data.lastname)
-                        })
-                        .catch((e) => {
-                            console.log(e)
-                        })
+                            .then((res) => {
+                                console.log("ON A REUSSI ? :", res.data.login, res.data.name, res.data.lastname)
+                                props.setUserInfo(res.data.login, res.data.name, res.data.lastname)
+                            })
+                            .catch((e) => {
+                                console.log(e)
+                            })
                     }
                 })
         } catch (err) {

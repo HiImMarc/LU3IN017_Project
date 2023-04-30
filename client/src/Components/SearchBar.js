@@ -11,18 +11,18 @@ export default function SearchBar(props) {
     // Pour pouvoir effacer avec ctrl a + backspace
     function handleKeyDown(e) {
         if (e.key === "Backspace" && e.ctrlKey && searchInput === "") {
-          props.onSearch("");
+            props.onSearch("");
         }
-      }
+    }
 
     return (
         <div className="search-bar">
             <input
-            type="text"
-            value={searchInput}
-            placeholder="Rechercher..."
-            onChange={handleSearch}
-            onKeyDown={handleKeyDown}
+                type="text"
+                value={searchInput}
+                placeholder="Rechercher..."
+                onChange={handleSearch}
+                onKeyDown={handleKeyDown}
             />
         </div>
     );

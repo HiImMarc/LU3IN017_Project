@@ -9,33 +9,34 @@ export default function FriendList(props) {
 	const [friends, setFriends] = useState([])
 	useEffect(() => {
 		getFriends()
-		getFriendRequests()}, [])
+		getFriendRequests()
+	}, [])
 
-	async function getFriends(){
+	async function getFriends() {
 		try {
 			await axios.get("http://localhost:8000/friends/get", {
-				params : {
+				params: {
 					userid: props.userid
 				}
 			})
-			.then( (res) => {
-				setFriends(res.data)
-			})
+				.then((res) => {
+					setFriends(res.data)
+				})
 		} catch (error) {
 			console.error(error)
 		}
 	}
 
-	async function getFriendRequests(){
+	async function getFriendRequests() {
 		try {
 			await axios.get("http://localhost:8000/friends/getTo", {
 				params: {
 					userid: props.userid
 				}
 			})
-			.then ( (res) => {
-				setfriendrequests(res.data)
-			})
+				.then((res) => {
+					setfriendrequests(res.data)
+				})
 		} catch (error) {
 			console.log(error)
 		}
@@ -45,14 +46,14 @@ export default function FriendList(props) {
 		try {
 			await axios.delete("http://localhost:8000/friends/invitation/response", {
 				params: {
-					accept : bool,
-					request : request
+					accept: bool,
+					request: request
 				}
 			})
-			.then( () => {
-				getFriendRequests()
-				getFriends()
-			})
+				.then(() => {
+					getFriendRequests()
+					getFriends()
+				})
 		} catch (error) {
 			console.log(error)
 		}
@@ -61,7 +62,7 @@ export default function FriendList(props) {
 	async function deleteFriend(friendid) {
 		try {
 			await axios.delete("http://localhost:8000/friends/delete", {
-				params : {
+				params: {
 					userid: props.userid,
 					friendid: friendid
 				}
@@ -81,7 +82,7 @@ export default function FriendList(props) {
 						<div className='requests'>
 							<li key={request.from}> {request.from} wants to be your friend</li>
 							<button onClick={() => handleFriendRequest(true, request)}>Accepter</button>
-							<br/>
+							<br />
 							<button onClick={() => handleFriendRequest(false, request)}>Refuser</button>
 						</div>
 					))}
@@ -91,11 +92,11 @@ export default function FriendList(props) {
 				<h2>Friend List : </h2>
 				<ul>
 					{friends.map(friend => (
-							<div className='friends'>
-								<li>MON AMI : {friend}</li>
-								<button onClick={() => deleteFriend()}>Retirer ami</button>
-							</div>
-						))}
+						<div className='friends'>
+							<li>MON AMI : {friend}</li>
+							<button onClick={() => deleteFriend()}>Retirer ami</button>
+						</div>
+					))}
 				</ul>
 				{/* Ajoutez ici la liste des amis acceptés */}
 			</div>

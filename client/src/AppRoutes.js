@@ -40,12 +40,12 @@ export default function AppRoutes() {
           userid: id
         }
       })
-      .then ( (res) => {
-        setUserInfo(res.data.login,res.data.name,res.data.lastname)
-      })
+        .then((res) => {
+          setUserInfo(res.data.login, res.data.name, res.data.lastname)
+        })
 
     }
-  }, [isConnected,userid,pseudo,name,lastname])
+  }, [isConnected, userid, pseudo, name, lastname])
 
   function setUserInfo(pseudo, name, lastname) {
     setPseudo(pseudo)

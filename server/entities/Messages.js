@@ -1,152 +1,152 @@
-const {ObjectId} = require('mongodb')
+const { ObjectId } = require('mongodb')
 
 class Messages {
     constructor(db) {
         this.db = db
     }
-    
-    createMessage(authorid, name, lastname, pseudo, content){
-        console.log("dans createMessage : ", authorid,content)
 
-        return new Promise( (resolve, reject) => {
+    createMessage(authorid, name, lastname, pseudo, content) {
+        console.log("dans createMessage : ", authorid, content)
+
+        return new Promise((resolve, reject) => {
             this.db.collection('Messages')
-            .insertOne({
-                authorid,
-                name,
-                lastname,
-                pseudo,
-                content,
-                likes : [],
-                comments : []
-            }, (error, result) => {
-                if (error) {
-                    reject(error)
-                } else {
-                    resolve(result)
-                }
-            })
+                .insertOne({
+                    authorid,
+                    name,
+                    lastname,
+                    pseudo,
+                    content,
+                    likes: [],
+                    comments: []
+                }, (error, result) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve(result)
+                    }
+                })
         })
     }
 
 
-    getAllMessages(){
-        return new Promise( (resolve, reject) => {
+    getAllMessages() {
+        return new Promise((resolve, reject) => {
             this.db.collection('Messages').find().toArray()
-            .then ( (res) => {
-                if (res) {
-                    resolve(res)
-                } else {
-                    reject("Erreur lors de getAllMessages")
-                }
-            })
-            .catch( (err) => console.log("getAllMessages catch : ",err))
+                .then((res) => {
+                    if (res) {
+                        resolve(res)
+                    } else {
+                        reject("Erreur lors de getAllMessages")
+                    }
+                })
+                .catch((err) => console.log("getAllMessages catch : ", err))
         })
     }
 
     getLikes(msgid) {
-        return new Promise( (resolve,reject) => {
+        return new Promise((resolve, reject) => {
             this.db.collection('Messages').findOne({
-                _id : {$eq : new ObjectId(msgid)}
+                _id: { $eq: new ObjectId(msgid) }
             })
-            .then( (message) => {
-                console.log("message : ",message)
-                if (message) {
-                    resolve(message.likes.length)
-                }
-            })
-            .catch( (err) => console.error(err))
+                .then((message) => {
+                    console.log("message : ", message)
+                    if (message) {
+                        resolve(message.likes.length)
+                    }
+                })
+                .catch((err) => console.error(err))
         })
     }
 
     addLike(userid, msgid) {
-        return new Promise( (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this.db.collection('Messages').findOne({
-                _id : {$eq : new ObjectId(msgid)}
+                _id: { $eq: new ObjectId(msgid) }
             })
-            .then ( (message) => {
-                console.log("message : ",message)
-                const likes = message.likes || []
-                const user = likes.findIndex((like) => like === userid)
-                // Si on a trouvé un userid qui correspond, on l'a déjà like, donc on va supprimer
-                if (user != -1) {
-                    const newLikes = likes.filter((like) => like !== userid);
-                    this.db.collection('Messages').updateOne({
-                        _id: new ObjectId(msgid)
-                    }, {
-                        $set: { likes: newLikes }
-                    })
-                    .then(() => {
-                        resolve({ 
-                            message: 'like deleted',
-                            likeCount: newLikes.length
-                        });
-                    })
-                    .catch((err) => {
-                        reject(err);
-                    });
-                // Si on l'a pas trouvé, on le rajoute
-                } else {
-                    likes.push(userid);
-                    this.db.collection('Messages').updateOne({
-                    _id: new ObjectId(msgid)
-                    }, {
-                    $set: { likes: likes }
-                    })
-                    .then(() => {
-                    resolve({ 
-                        message: 'like added',
-                        likeCount: likes.length,
-                    });
-                    })
-                    .catch((err) => {
-                    reject(err);
-                    });
-                }
-            })
+                .then((message) => {
+                    console.log("message : ", message)
+                    const likes = message.likes || []
+                    const user = likes.findIndex((like) => like === userid)
+                    // Si on a trouvé un userid qui correspond, on l'a déjà like, donc on va supprimer
+                    if (user != -1) {
+                        const newLikes = likes.filter((like) => like !== userid);
+                        this.db.collection('Messages').updateOne({
+                            _id: new ObjectId(msgid)
+                        }, {
+                            $set: { likes: newLikes }
+                        })
+                            .then(() => {
+                                resolve({
+                                    message: 'like deleted',
+                                    likeCount: newLikes.length
+                                });
+                            })
+                            .catch((err) => {
+                                reject(err);
+                            });
+                        // Si on l'a pas trouvé, on le rajoute
+                    } else {
+                        likes.push(userid);
+                        this.db.collection('Messages').updateOne({
+                            _id: new ObjectId(msgid)
+                        }, {
+                            $set: { likes: likes }
+                        })
+                            .then(() => {
+                                resolve({
+                                    message: 'like added',
+                                    likeCount: likes.length,
+                                });
+                            })
+                            .catch((err) => {
+                                reject(err);
+                            });
+                    }
+                })
 
         })
     }
 
-    addComment(msgid,userid,lastname,name,pseudo,content) {
-        return new Promise( (resolve,reject) => {            
+    addComment(msgid, userid, lastname, name, pseudo, content) {
+        return new Promise((resolve, reject) => {
             this.db.collection('Messages').findOne({
                 _id: new ObjectId(msgid)
             })
-            .then((message) => {
-                const newcomment = {
-                    userid : userid,
-                    lastname: lastname,
-                    name: name,
-                    pseudo: pseudo,
-                    content : content
-                }
-                const newcomments = message.comments || []
-                newcomments.push(newcomment)
-                this.db.collection('Messages').updateOne({
-                    _id: new ObjectId(msgid)
-                }, {
-                    $set: { comments: newcomments }
+                .then((message) => {
+                    const newcomment = {
+                        userid: userid,
+                        lastname: lastname,
+                        name: name,
+                        pseudo: pseudo,
+                        content: content
+                    }
+                    const newcomments = message.comments || []
+                    newcomments.push(newcomment)
+                    this.db.collection('Messages').updateOne({
+                        _id: new ObjectId(msgid)
+                    }, {
+                        $set: { comments: newcomments }
+                    })
+                        .then(() => {
+                            resolve({
+                                message: 'comment added'
+                            });
+                        })
+                        .catch((err) => {
+                            reject(err);
+                        });
                 })
-                .then(() => {
-                    resolve({ 
-                        message: 'comment added'
-                    });
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-            })
 
         })
     }
 
     deleteMessage(msgid) {
-        return new Promise( (resolve,reject) => {
+        return new Promise((resolve, reject) => {
             this.db.collection('Messages').deleteOne({
                 _id: new ObjectId(msgid)
             })
-            .then ((result) => resolve(result))
-            .catch((err) => reject(err))
+                .then((result) => resolve(result))
+                .catch((err) => reject(err))
         })
     }
 

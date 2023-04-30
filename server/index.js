@@ -1,5 +1,5 @@
 const cors = require('cors')
-const express = require('express'); 
+const express = require('express');
 const app = express();
 const session = require('express-session') // J'ai pas compris c'est quoi encore ? J'utilise jwt à la place je crois
 
@@ -9,4 +9,4 @@ app.use(cors()) // Je sais pas si c'est nécessaire mais ça a réglé un probl�
 const router = require('./api')
 app.use('/', router);
 
-app.listen(8000, () => { console.log("Serveur écoute port 8000")})
+app.listen(8000, () => { console.log("Serveur écoute port 8000") })

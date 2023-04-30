@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import './Profile.css'
 import MessageList from './MessageList';
@@ -10,18 +10,18 @@ export default function Profile(props) {
         <div className='myprofile'>
             <div className='profile'>
                 {props.pseudo}
-                <br/>
+                <br />
                 {props.name}
-                <br/>
+                <br />
                 {props.lastname}
-                <br/>
-                {}
-                {}
+                <br />
+                { }
+                { }
             </div>
-            <br/>
+            <br />
             <div className='mymessages'>
                 here
             </div>
         </div>
-      )
+    )
 }

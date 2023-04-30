@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import MessageForm from "./MessageForm";
 
-export default function SideBar(props){
+export default function SideBar(props) {
 
     const [showMessageForm, setShowMessageForm] = useState(false);
 
@@ -27,15 +27,15 @@ export default function SideBar(props){
 
             <button onClick={openMessageForm}>Nouveau Message</button>
             <MessageForm updateMessages={props.updateMessages} getMessagesData={props.getMessagesData} showMessageForm={showMessageForm} closeMessageForm={closeMessageForm}
-            userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} 
-            name={props.name} lastname={props.lastname}/>
+                userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo}
+                name={props.name} lastname={props.lastname} />
 
 
             <button className='button-settings'>Settings</button>
-            {props.isConnected ? 
-            (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} name={props.name} lastname={props.lastname}  />)
-            :
-            (<Link to='/login' userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} name={props.name} lastname={props.lastname} >Cliquez ici pour vous connectez hehe </Link>)
+            {props.isConnected ?
+                (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} name={props.name} lastname={props.lastname} />)
+                :
+                (<Link to='/login' userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} name={props.name} lastname={props.lastname} >Cliquez ici pour vous connectez hehe </Link>)
             }
         </div>
     );

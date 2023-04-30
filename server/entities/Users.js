@@ -6,12 +6,12 @@ class Users {
 	}
 
 	createUser(login, password, name, lastname) {
-		return new Promise( async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 
-			const exists = await this.db.collection('Users').findOne({login})
-			.catch ((error) => {
-				console.log(error);
-			})
+			const exists = await this.db.collection('Users').findOne({ login })
+				.catch((error) => {
+					console.log(error);
+				})
 
 			console.log("exists : ", exists)
 
@@ -20,14 +20,14 @@ class Users {
 
 			} else {
 				this.db.collection('Users')
-				.insertOne({ login, password, name, lastname, friends:[] })
-				.then ( (res) => {
-					if (res) {
-						resolve(res)
-					} else {
-						reject("createUser-error")
-					}
-				})
+					.insertOne({ login, password, name, lastname, friends: [] })
+					.then((res) => {
+						if (res) {
+							resolve(res)
+						} else {
+							reject("createUser-error")
+						}
+					})
 			}
 		})
 	}
@@ -36,8 +36,8 @@ class Users {
 	login(login, password) {
 		return new Promise((resolve, reject) => {
 			const result = this.db.collection('Users').findOne({
-				login : {$eq : login},
-				password : {$eq : password}
+				login: { $eq: login },
+				password: { $eq: password }
 			});
 			if (result) {
 				resolve(result);
@@ -48,9 +48,9 @@ class Users {
 	}
 
 	getInfo(id) {
-		return new Promise( (resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			const result = this.db.collection('Users').findOne(
-				{ _id : new ObjectId(id) }
+				{ _id: new ObjectId(id) }
 			)
 			if (result) {
 				resolve(result);

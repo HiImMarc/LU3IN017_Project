@@ -1,4 +1,4 @@
-const {ObjectId} = require('mongodb')
+const { ObjectId } = require('mongodb')
 
 
 class Friends {
@@ -7,9 +7,9 @@ class Friends {
     }
 
     getFriends(userId) {
-        return new Promise(async (resolve,reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                const user = await this.db.collection('Users').findOne({ 
+                const user = await this.db.collection('Users').findOne({
                     _id: new ObjectId(userId)
                 });
                 if (!user) {
@@ -21,11 +21,11 @@ class Friends {
                 reject(error)
             }
         })
-    
+
 
     }
 
-    areFriends(userid1,userid2){
+    areFriends(userid1, userid2) {
         try {
             const friends = getFriends(userid1)
             return friends.includes(userid2)
@@ -34,39 +34,39 @@ class Friends {
         }
     }
 
-    sendFriendRequest(from, to, message){
-        console.log("dans askFriend : ", from,to,message)
-        return new Promise( (resolve, reject) => {
+    sendFriendRequest(from, to, message) {
+        console.log("dans askFriend : ", from, to, message)
+        return new Promise((resolve, reject) => {
             this.db.collection('FriendRequests')
-            .insertOne({
-                from,
-                to,
-                message
-            }, (error, result) => {
-                if (error) {
-                    reject(error)
-                } else {
-                    resolve(result)
-                }
-            })
+                .insertOne({
+                    from,
+                    to,
+                    message
+                }, (error, result) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve(result)
+                    }
+                })
         })
     }
 
     getFriendRequestsTo(userid) {
-        return new Promise( (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this.db.collection('FriendRequests')
-            .find({to : {$eq : userid}})
-            .toArray()
-            .then ((result) => resolve(result))
-            .catch((error) => reject(error))
+                .find({ to: { $eq: userid } })
+                .toArray()
+                .then((result) => resolve(result))
+                .catch((error) => reject(error))
         })
     }
 
     anwserRequest(accept, request) {
-        return new Promise ((resolve, reject) => {
-            let result  = ""
+        return new Promise((resolve, reject) => {
+            let result = ""
             const requestid = request._id.toString()
-            const user = this.db.collection('Users').findOne({ _id : new ObjectId(request.to)})
+            const user = this.db.collection('Users').findOne({ _id: new ObjectId(request.to) })
             if (accept) {
                 const newfriends = user.friends || []
                 newfriends.push(request.from)
@@ -76,31 +76,31 @@ class Friends {
                     $set: { friends: newfriends }
                 })
                 result = "friend added"
-                this.db.collection('FriendRequests').deleteOne( { _id : new ObjectId(requestid)})
+                this.db.collection('FriendRequests').deleteOne({ _id: new ObjectId(requestid) })
 
                 resolve(result)
             } else {
                 result = "friend not added"
-                this.db.collection('FriendRequests').deleteOne( { _id : new ObjectId(requestid)}) 
+                this.db.collection('FriendRequests').deleteOne({ _id: new ObjectId(requestid) })
                 resolve(result)
             }
         })
-        
+
     }
 
-    deleteFriend(userid,friendid) {
-        return new Promise ((resolve, reject) => {
+    deleteFriend(userid, friendid) {
+        return new Promise((resolve, reject) => {
 
-            const user = this.db.collection('Users').findOne({ _id : new ObjectId(userid)})
+            const user = this.db.collection('Users').findOne({ _id: new ObjectId(userid) })
             const friends = user.friends || []
             const newfriends = friends.filter(friend => element != friendid)
             this.db.collection('Users').updateOne({
-                _id : new ObjectId(userid)
+                _id: new ObjectId(userid)
             }, {
-                $set : {friends: newfriends}
+                $set: { friends: newfriends }
             })
-            .then (res => resolve("friend deleted", res))
-            .catch(e => console.error(e))
+                .then(res => resolve("friend deleted", res))
+                .catch(e => console.error(e))
         })
     }
 
