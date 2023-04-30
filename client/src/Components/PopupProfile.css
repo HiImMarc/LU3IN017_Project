@@ -1,6 +1,8 @@
 .main {
     position: fixed;
     background: white;
+    display:flex;
+    flex-direction: column;
     width: 50%;
     height: auto;
     top: 50%;
@@ -17,4 +19,9 @@
 
 .display-none {
     display: none;
+}
+
+.profile-messages {
+    height: 200px;
+    overflow-y: scroll;
 }

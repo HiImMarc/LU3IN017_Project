@@ -26,7 +26,7 @@ export default function SideBar(props) {
 
 
             <button onClick={openMessageForm}>Nouveau Message</button>
-            <MessageForm updateMessages={props.updateMessages} getMessagesData={props.getMessagesData} showMessageForm={showMessageForm} closeMessageForm={closeMessageForm}
+            <MessageForm showMessageForm={showMessageForm} closeMessageForm={closeMessageForm}
                 userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo}
                 name={props.name} lastname={props.lastname} />
 

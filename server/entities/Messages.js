@@ -5,7 +5,7 @@ class Messages {
         this.db = db
     }
 
-    createMessage(authorid, name, lastname, pseudo, content) {
+    createMessage(authorid, name, lastname, pseudo, content, date) {
         console.log("dans createMessage : ", authorid, content)
 
         return new Promise((resolve, reject) => {
@@ -17,7 +17,8 @@ class Messages {
                     pseudo,
                     content,
                     likes: [],
-                    comments: []
+                    comments: [],
+                    date
                 }, (error, result) => {
                     if (error) {
                         reject(error)

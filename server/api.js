@@ -1,5 +1,4 @@
 const router = require("express").Router()
-
 const Users = require("./entities/Users")
 const Messages = require("./entities/Messages")
 const Friends = require("./entities/Friends.js")
@@ -50,7 +49,7 @@ router.get("/users/id/infos", async function (req, res) {
 
 router.post("/messages/new", async function (req, res) {
     const message = new Messages(req.db);
-    await message.createMessage(req.body.id, req.body.name, req.body.lastname, req.body.pseudo, req.body.content)
+    await message.createMessage(req.body.id, req.body.name, req.body.lastname, req.body.pseudo, req.body.content, req.body.date)
         .then((result) => {
             if (result) {
                 res.send(result)
@@ -124,19 +123,20 @@ router.delete("/friends/invitation/response", async function (req, res) {
 
 router.get("/friends/get", async function (req, res) {
     const friend = new Friends(req.db)
+    console.log("/friends/get req.query.userid : ", req.query.userid)
     await friend.getFriends(req.query.userid)
         .then((result) => {
             res.send(result)
         })
         .catch((err) => console.error(err))
-})
+}) // Retourne les amis d'un user
 
 router.delete("/friends/delete", async function (req, res) {
     const friend = new Friends(req.db)
     await friend.deleteFriend(req.query.userid, req.query.friendid)
         .then((result) => res.send(result))
         .catch((err) => console.error(err))
-})
+}) // Supprime le lien d'amitié entre deux users
 
 
 /*

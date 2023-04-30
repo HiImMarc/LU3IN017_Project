@@ -22,7 +22,8 @@ function MessageForm(props) {
             name: props.name,
             lastname: props.lastname,
             pseudo: props.pseudo,
-            content: message
+            content: message,
+            date: Date.now()
         })
             .then(() => {
                 props.updateMessages()

@@ -20,12 +20,13 @@ function Home(props) {
     // Pour le switch entre mes messages/tout les messages/messages de mes amis seulement
     const [filter, setFilter] = useState('all');
 
-
     //Etats pour la gestion des messages
     const [messageData, setMessageData] = useState([]);
     const [searchInput, setSearchInput] = useState("");
 
-    useEffect(getMessagesData, [])
+    useEffect(async () => {
+        getMessagesData()
+    }, [])
 
     // Filtrer le tableau de messages en fonction de la valeur de recherche
     const filteredMessages = messageData.filter(item =>
@@ -44,33 +45,33 @@ function Home(props) {
             messagesList = filteredMessages.filter(item => item.authorid === props.userid);
             break;
         case 'friends':
-            // const user = props.users.find(user => user.id === props.userid);
-            // const friendIds = user.friends;
-            // messagesList = filteredMessages.filter(item => friendIds.includes(item.userid));
+            messagesList = filteredMessages.filter(item => props.friends.includes(item.authorid));
             break;
         default:
             messagesList = filteredMessages;
             break;
     }
 
+    console.log("messageList", messagesList)
 
     function handleSearch(input) {
         setSearchInput(input);
     }
 
-    function getMessagesData() {
+    async function getMessagesData() {
         axios.get("http://localhost:8000/messages")
             .then((res) => {
                 setMessageData(res.data)
-                console.log("LA DATA MESSAGE RETURNED EST :", res.data)
+                console.log("LA DATA MESSAGE EST :", res.data)
             })
             .catch(error => console.log(error))
 
     }
 
     console.log('Home : isConnected', props.isConnected)
-    console.log("MON ID est : ", props.userid);
-
+    console.log("userid : ", props.userid);
+    console.log("friends : ",props.friends)
+    
 
     return (
         <div className="home">
@@ -101,28 +102,32 @@ function Home(props) {
                         <button onClick={() => setFilter('all')}>Tous les messages</button>
                         <button onClick={() => setFilter('me')}>Mes messages</button>
                         <button onClick={() => setFilter('friends')}>Messages d'amis</button>
-                        <MessageList isConnected={props.isConnected} data={messagesList} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId} />
+                        <MessageList data={messagesList} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId} 
+                        friends={props.friends}/>
                     </div>
                     :
                     <></>
                 }
                 {page === "myprofile" ?
                     <div className='myprofile'>
-                        <Profile lastname={props.lastname} name={props.name} pseudo={props.pseudo} isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} watcherid={props.userid} setUserId={props.setUserId} />
+                        <Profile lastname={props.lastname} name={props.name} pseudo={props.pseudo} isConnected={props.isConnected} data={messagesList} 
+                        searchInput={searchInput} userid={props.userid} friends={props.friends}/>
                     </div>
                     :
                     <></>
                 }
                 {page === "friendlist" ?
                     <div className='friendlist'>
-                        <FriendList isConnected={props.isConnected} data={filteredMessages} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId} />
+                        <FriendList isConnected={props.isConnected} userid={props.userid} setUserId={props.setUserId} 
+                        friends={props.friends} />
                     </div>
                     :
                     <></>
                 }
                 <div className="sideBar">
-                    <SideBar changePage={changePage} updateMessages={getMessagesData} getMessagesData={getMessagesData} isConnected={props.isConnected} logout={props.logout} login={props.login} userid={props.userid} setUserId={props.setUserId}
-                        pseudo={props.pseudo} name={props.name} lastname={props.lastname} />
+                    <SideBar changePage={changePage} updateMessages={getMessagesData} getMessagesData={getMessagesData} isConnected={props.isConnected} logout={props.logout} 
+                    login={props.login} userid={props.userid} setUserId={props.setUserId}
+                    pseudo={props.pseudo} name={props.name} lastname={props.lastname} />
                 </div>
             </div>
 

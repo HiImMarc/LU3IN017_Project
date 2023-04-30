@@ -6,26 +6,9 @@ import axios from 'axios'
 export default function FriendList(props) {
 
 	const [friendrequests, setfriendrequests] = useState([])
-	const [friends, setFriends] = useState([])
 	useEffect(() => {
-		getFriends()
 		getFriendRequests()
 	}, [])
-
-	async function getFriends() {
-		try {
-			await axios.get("http://localhost:8000/friends/get", {
-				params: {
-					userid: props.userid
-				}
-			})
-				.then((res) => {
-					setFriends(res.data)
-				})
-		} catch (error) {
-			console.error(error)
-		}
-	}
 
 	async function getFriendRequests() {
 		try {
@@ -52,7 +35,7 @@ export default function FriendList(props) {
 			})
 				.then(() => {
 					getFriendRequests()
-					getFriends()
+					props.getFriends()
 				})
 		} catch (error) {
 			console.log(error)
@@ -72,26 +55,29 @@ export default function FriendList(props) {
 		}
 	}
 
+	console.log("friends requests : ",friendrequests)
 
 	return (
 		<div className='FriendListMain'>
 			<div className='FriendRequests'>
 				<h2>Friend Requests : </h2>
 				<ul>
-					{friendrequests.map(request => (
-						<div className='requests'>
-							<li key={request.from}> {request.from} wants to be your friend</li>
+					{friendrequests.length > 0 ? friendrequests.map(request => (
+						<div className='requests' key={request.from}>
+							<li > {request.from} wants to be your friend</li>
 							<button onClick={() => handleFriendRequest(true, request)}>Accepter</button>
 							<br />
-							<button onClick={() => handleFriendRequest(false, request)}>Refuser</button>
+							<button  onClick={() => handleFriendRequest(false, request)}>Refuser</button>
 						</div>
-					))}
+					))
+						:
+					<></>}
 				</ul>
 			</div>
 			<div className='FriendList'>
 				<h2>Friend List : </h2>
 				<ul>
-					{friends.map(friend => (
+					{props.friends.map(friend => (
 						<div className='friends'>
 							<li>MON AMI : {friend}</li>
 							<button onClick={() => deleteFriend()}>Retirer ami</button>

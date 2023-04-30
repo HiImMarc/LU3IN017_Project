@@ -10,82 +10,80 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios'
 
 export default function AppRoutes() {
-  const [isConnected, setConnect] = useState(false);
-  const [userid, setId] = useState("");
+	const [isConnected, setConnect] = useState(false);
+	const [userid, setId] = useState("");
 
-  const [pseudo, setPseudo] = useState("default Pseudo")
-  const [name, setName] = useState("default Name")
-  const [lastname, setLastName] = useState("default Lastname")
+	const [pseudo, setPseudo] = useState("default Pseudo")
+	const [name, setName] = useState("default Name")
+	const [lastname, setLastName] = useState("default Lastname")
+	const [friends, setFriends] = useState([])
 
+	function getUserIdFromToken(token) {
+		try {
+			const decodedToken = jwt_decode(token);
+			return decodedToken.id;
+		} catch (err) {
+			console.error(err);
+			return null;
+		}
+	}
 
+	useEffect(() => {
+		const token = localStorage.getItem('token');
+		if (token) {
+			const id = getUserIdFromToken(token)
+			setId(id)
+			setConnect(true)
+			axios.get("http://localhost:8000/users/id/infos/", {
+				params: {
+					userid: id
+				}
+			})
+				.then((res) => {
+					setUserInfo(res.data.login, res.data.name, res.data.lastname, res.data.friends)
+				})
 
-  function getUserIdFromToken(token) {
-    try {
-      const decodedToken = jwt_decode(token);
-      return decodedToken.id;
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-  }
+		}
+	}, [isConnected, userid, pseudo, name, lastname])
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const id = getUserIdFromToken(token)
-      setId(id)
-      setConnect(true)
-      axios.get("http://localhost:8000/users/id/infos/", {
-        params: {
-          userid: id
-        }
-      })
-        .then((res) => {
-          setUserInfo(res.data.login, res.data.name, res.data.lastname)
-        })
+	function setUserInfo(pseudo, name, lastname, friends) {
+		setPseudo(pseudo)
+		setName(name)
+		setLastName(lastname)
+		setFriends(friends)
+	}
 
-    }
-  }, [isConnected, userid, pseudo, name, lastname])
+	function getConnected() {
+		setConnect(true)
+	}
 
-  function setUserInfo(pseudo, name, lastname) {
-    setPseudo(pseudo)
-    setName(name)
-    setLastName(lastname)
-  }
+	function setLogout() {
+		setConnect(false)
+	}
 
-  function getConnected() {
-    setConnect(true)
-  }
+	async function setUserId(id) {
+		setId(id)
+	}
 
-  function setLogout() {
-    setConnect(false)
-  }
+	return (
+		<Routes>
 
-  function setUserId(id) {
-    setId(id)
-  }
+			<Route exact path='/' element={<MainPage isConnected={isConnected} login={getConnected} logout={setLogout}
+				userid={userid} setUserId={setUserId}
+				pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo}
+				friends={friends}
+			/>} />
 
-  return (
-    <Routes>
+			<Route exact path='/login' element={<Login isConnected={isConnected} login={getConnected} logout={setLogout}
+				userid={userid} setUserId={setUserId}
+				pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo} friends={friends}
+				/>} />
 
-      <Route exact path='/' element={<MainPage isConnected={isConnected} login={getConnected} logout={setLogout}
-        userid={userid} setUserId={setUserId}
-        pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo}
-      />} />
+			<Route exact path='/signup' element={<SignUp isConnected={isConnected} login={getConnected} logout={setLogout}
+				userid={userid} setUserId={setUserId}
+				pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo} friends={friends}/>} />
 
-      <Route exact path='/home/profile' element={<Profile isConnected={isConnected} login={getConnected} logout={setLogout}
-        userid={userid} setUserId={setUserId}
-        pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo} />} />
-
-      <Route exact path='/login' element={<Login isConnected={isConnected} login={getConnected} logout={setLogout}
-        userid={userid} setUserId={setUserId}
-        pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo} />} />
-
-      <Route exact path='/signup' element={<SignUp isConnected={isConnected} login={getConnected} logout={setLogout}
-        userid={userid} setUserId={setUserId}
-        pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo} />} />
-
-    </Routes>
-  )
+		</Routes>
+	)
 
 }

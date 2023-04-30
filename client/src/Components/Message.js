@@ -62,17 +62,31 @@ export default function Message(props) {
 		}
 	}
 
+	console.log("PROPS.DATE", props.date)
+
+	const date = new Date(props.date);
+	const time = date.toLocaleString('fr-FR', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		second: 'numeric',
+		hour12: false
+	});
+	console.log(time)
+
 	return (
 		<div className="message">
 			<li>
-				<h2>{props.name} {props.lastname} | @{props.pseudo}
+				<h2>{props.name} {props.lastname} | @{props.pseudo} | {time}
 					{props.userid == props.authorid ? (
 						<button onClick={handleDeleteMessage}>delete</button>
 					)
 						:
 						<button onClick={openPopupProfile}>Voir Profil</button>}
 						<PopupProfile showPopupProfile={showPopupProfile} closePopupProfile={closePopupProfile} userid={props.userid}
-						name={props.name} lastname={props.lastname} pseudo={props.pseudo} authorid={props.authorid} />
+						name={props.name} lastname={props.lastname} pseudo={props.pseudo} authorid={props.authorid} friends={props.friends} data={props.data}/>
 				</h2>
 				<p>{props.content}</p>
 				<br />
@@ -94,6 +108,7 @@ export default function Message(props) {
 								lastname={item.lastname}
 								pseudo={item.pseudo}
 								content={item.content}
+								date={Date.now()}
 							/>
 						)))
 						:
