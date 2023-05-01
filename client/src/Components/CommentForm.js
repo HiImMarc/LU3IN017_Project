@@ -38,7 +38,8 @@ function CommentForm(props) {
                     lastname: authorLastname,
                     name: authorName,
                     pseudo: authorPseudo,
-                    content: comment
+                    content: comment,
+                    date: Date.now()
                 })
                     .then((res) => {
                         console.log("res from submitComment : ", res)

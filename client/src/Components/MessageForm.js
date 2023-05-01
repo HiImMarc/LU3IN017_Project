@@ -25,9 +25,7 @@ function MessageForm(props) {
             content: message,
             date: Date.now()
         })
-            .then(() => {
-                props.updateMessages()
-            })
+            .then( () => window.location.reload(false))
             .catch((err) => console.log(err))
     }
 

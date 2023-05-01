@@ -1,7 +1,5 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Authentification from './Components/Authentification'
-import Profile from './Components/Profile'
 import MainPage from './Components/MainPage'
 import { useState, useEffect } from 'react'
 import Login from './Components/Login'
@@ -14,7 +12,7 @@ export default function AppRoutes() {
 	const [userid, setId] = useState("");
 
 	const [pseudo, setPseudo] = useState("default Pseudo")
-	const [name, setName] = useState("default Name")
+	const [firstname, setFirstName] = useState("default FirstName")
 	const [lastname, setLastName] = useState("default Lastname")
 	const [friends, setFriends] = useState([])
 
@@ -28,27 +26,30 @@ export default function AppRoutes() {
 		}
 	}
 
-	useEffect(() => {
+	async function handleTokenInfos() {
 		const token = localStorage.getItem('token');
 		if (token) {
 			const id = getUserIdFromToken(token)
 			setId(id)
 			setConnect(true)
-			axios.get("http://localhost:8000/users/id/infos/", {
+			await axios.get("http://localhost:8000/users/id/infos/", {
 				params: {
 					userid: id
 				}
 			})
 				.then((res) => {
-					setUserInfo(res.data.login, res.data.name, res.data.lastname, res.data.friends)
+					setUserInfo(res.data.pseudo, res.data.firstname, res.data.lastname, res.data.friends)
 				})
-
 		}
-	}, [isConnected, userid, pseudo, name, lastname])
+	}
 
-	function setUserInfo(pseudo, name, lastname, friends) {
+	useEffect(() => {
+		handleTokenInfos()
+	}, [isConnected, userid, pseudo, firstname, lastname])
+
+	function setUserInfo(pseudo, firstname, lastname, friends) {
 		setPseudo(pseudo)
-		setName(name)
+		setFirstName(firstname)
 		setLastName(lastname)
 		setFriends(friends)
 	}
@@ -70,18 +71,16 @@ export default function AppRoutes() {
 
 			<Route exact path='/' element={<MainPage isConnected={isConnected} login={getConnected} logout={setLogout}
 				userid={userid} setUserId={setUserId}
-				pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo}
+				pseudo={pseudo} firstname={firstname} lastname={lastname} setUserInfo={setUserInfo}
 				friends={friends}
 			/>} />
 
-			<Route exact path='/login' element={<Login isConnected={isConnected} login={getConnected} logout={setLogout}
-				userid={userid} setUserId={setUserId}
-				pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo} friends={friends}
-				/>} />
+			<Route exact path='/login' element={<Login isConnected={isConnected} login={getConnected}
+				userid={userid} setUserId={setUserId} />} />
 
-			<Route exact path='/signup' element={<SignUp isConnected={isConnected} login={getConnected} logout={setLogout}
+			<Route exact path='/signup' element={<SignUp isConnected={isConnected} login={getConnected}
 				userid={userid} setUserId={setUserId}
-				pseudo={pseudo} name={name} lastname={lastname} setUserInfo={setUserInfo} friends={friends}/>} />
+			/>} />
 
 		</Routes>
 	)

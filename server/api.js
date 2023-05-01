@@ -10,7 +10,7 @@ const getDB = async (req, res, next) => { // Fonction pour donner une instance d
     try {
         const client = await connectToDB();
         req.db = client.db('Birdy');
-        process.on('SIGINT', () => client.close()); // Quand il y a une IT (genre ctrl c) on ferme la database
+        process.on('SIGINT', () => client.close()); // Quand il y a une IT (ctrl c etc...) on ferme la database
         next();
     } catch (err) {
         console.error(err);
@@ -18,6 +18,10 @@ const getDB = async (req, res, next) => { // Fonction pour donner une instance d
     }
 };
 router.use(getDB);
+
+
+
+///////////////////// SERVICES UTILISATEURS /////////////////////
 
 router.post("/users/new", async function (req, res) {
     const user = new Users(req.db)
@@ -41,17 +45,27 @@ router.get("/users/id/infos", async function (req, res) {
     const id = req.query.userid // On récupère l'id de l'user connecté
     const result = await user.getInfo(id);
     if (result) {
+        //console.log("!!!!!!!!!!!!!",result)
         res.send(result);
     } else {
         res.send("erreur lors de getInfos");
     }
 }) // Récupère les infos d'un user
 
+router.delete("/users/delete", async function (req, res) {
+    const user = new Users(req.db)
+    await user.deleteAccount(req.query.userid)
+    .then((result) => res.send(result))
+}) // Supprime un compte
+
+///////////////////// SERVICES MESSAGES /////////////////////
+
 router.post("/messages/new", async function (req, res) {
     const message = new Messages(req.db);
     await message.createMessage(req.body.id, req.body.name, req.body.lastname, req.body.pseudo, req.body.content, req.body.date)
         .then((result) => {
             if (result) {
+                console.log("/messages/new")
                 res.send(result)
             } else {
                 res.send('erreur lors de création message')
@@ -88,7 +102,8 @@ router.get("/messages/:msgid/likes", async function (req, res) {
 
 router.patch("/messages/comment/new", async function (req, res) {
     const message = new Messages(req.db);
-    await message.addComment(req.body.msgid, req.body.userid, req.body.lastname, req.body.name, req.body.pseudo, req.body.content)
+    //console.log("#######",req.body.msgid, req.body.userid, req.body.lastname, req.body.name, req.body.pseudo, req.body.content)
+    await message.addComment(req.body.msgid, req.body.userid, req.body.lastname, req.body.name, req.body.pseudo, req.body.content, req.body.date)
         .then((result) => res.send(result))
         .catch((err) => console.log("erreur dans api : ", err))
 }) // Ajoute un commentaire à un message
@@ -100,9 +115,15 @@ router.delete("/messages/delete", async function (req, res) {
         .catch((err) => console.log(err))
 }) // Supprime un message avec l'id msgid
 
+
+
+
+
+///////////////////// SERVICES AMIS /////////////////////
+
 router.post("/friends/invitation", async function (req, res) {
     const friend = new Friends(req.db)
-    await friend.sendFriendRequest(req.body.from, req.body.to, req.body.message)
+    await friend.sendFriendRequest(req.body.from, req.body.fromPseudo, req.body.to, req.body.toPseudo, req.body.message)
         .then((result) => res.send(result))
         .catch((error) => console.error(error))
 }) // Envoie une demande d'ami avec un message de from à to
@@ -139,14 +160,12 @@ router.delete("/friends/delete", async function (req, res) {
 }) // Supprime le lien d'amitié entre deux users
 
 
-/*
+/* A FAIRE ? 
 router.delete("/users/delete/:userid", Users.logout) // Supprime un compte
 router.get("/users/id/:userid", Users.getId) // Récupère l'id d'un user
 
 router.get("/messages/user/:userid", Messages.getAllMessagesId) // Récupère les messages d'un user
 router.get("/messages/:msgid", Messages.getMessage) // Récupère un message 
-router.put("/messages/set/:msgid", Messages.setMessage) // Met à jour un message 
-router.delete("/messages/delete/:msgid", Messages.deleteMessage) // Supprime un message
 router.get("/messages/friend/:userid/:friendid", Messages.getMessagesFromAllFriends) // Récupère tout les messages d'un ami (friendid) d'un user (userid)
 router.get("/messages/friend/:userid", Messages.getMessagesFromFriend) // Récupère tout les messages des amis d'un user
 router.get("/messages/stats/:userid", Messages.getStats) // Récupère les statistiques des messages d'un user

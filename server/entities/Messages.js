@@ -5,27 +5,22 @@ class Messages {
         this.db = db
     }
 
-    createMessage(authorid, name, lastname, pseudo, content, date) {
-        console.log("dans createMessage : ", authorid, content)
+    createMessage(authorid, firstname, lastname, pseudo, content, date) {
+        //console.log("createMessage : ", authorid, content)
 
         return new Promise((resolve, reject) => {
-            this.db.collection('Messages')
-                .insertOne({
+            this.db.collection('Messages').insertOne({
                     authorid,
-                    name,
+                    firstname,
                     lastname,
                     pseudo,
                     content,
                     likes: [],
                     comments: [],
                     date
-                }, (error, result) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve(result)
-                    }
-                })
+            })
+            .then ((res) => resolve(res))
+            .catch((err)=> console.error(err))
         })
     }
 
@@ -108,7 +103,7 @@ class Messages {
         })
     }
 
-    addComment(msgid, userid, lastname, name, pseudo, content) {
+    addComment(msgid, userid, lastname, firstname, pseudo, content, date) {
         return new Promise((resolve, reject) => {
             this.db.collection('Messages').findOne({
                 _id: new ObjectId(msgid)
@@ -117,9 +112,10 @@ class Messages {
                     const newcomment = {
                         userid: userid,
                         lastname: lastname,
-                        name: name,
+                        firstname: firstname,
                         pseudo: pseudo,
-                        content: content
+                        content: content,
+                        date: date
                     }
                     const newcomments = message.comments || []
                     newcomments.push(newcomment)

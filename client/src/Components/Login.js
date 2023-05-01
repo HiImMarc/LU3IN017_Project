@@ -6,15 +6,19 @@ import axios from 'axios';
 
 export default function Login(props) {
 
+    const [wronglogins,setWrongLogins] = useState(false)
+
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
 
     function getLogin(event) {
         setLogin(event.target.value);
+        setWrongLogins(false)
     }
 
     function getPassword(event) {
         setPassword(event.target.value);
+        setWrongLogins(false)
     }
 
     const navigate = useNavigate();
@@ -34,6 +38,7 @@ export default function Login(props) {
                 .then((res) => {
                     if (res.data === "wrong password or login") {
                         console.log("mauvais identifiants")
+                        setWrongLogins(true)
                     } else {
                         console.log("res[0].data", res)
                         props.setUserId(res.data._id)
@@ -83,7 +88,11 @@ export default function Login(props) {
                     <button type="reset">Annuler</button>
                 </form>
             </div>
-
+            { wronglogins ? 
+            <div>Mauvais identifiants</div>
+            :
+            <></>
+            }
             <Link className='tosignup' to='/signup'>Pas de compte ? Inscrivez vous ici</Link>
         </div>
     );

@@ -21,21 +21,21 @@ export default function SideBar(props) {
     return (
         <div className="sidebar">
             <button className='button-accueil' onClick={() => props.changePage("accueil")}>Accueil</button>
-            <button className='button-friends' onClick={() => props.changePage("friendlist")}>Friends</button>
-            <button className='button-myprofile' onClick={() => props.changePage("myprofile")}>My Profile</button>
+            <button className='button-friends' onClick={() => props.changePage("friendlist")}>Mes amis</button>
+            <button className='button-myprofile' onClick={() => props.changePage("myprofile")}>Mon Profil</button>
 
 
             <button onClick={openMessageForm}>Nouveau Message</button>
             <MessageForm showMessageForm={showMessageForm} closeMessageForm={closeMessageForm}
                 userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo}
-                name={props.name} lastname={props.lastname} />
+                firstname={props.firstname} lastname={props.lastname} />
 
 
-            <button className='button-settings'>Settings</button>
+            <button className='button-settings' onClick={() => props.changePage("options")}>Options</button>
             {props.isConnected ?
-                (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} name={props.name} lastname={props.lastname} />)
+                (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} firstname={props.firstname} lastname={props.lastname} />)
                 :
-                (<Link to='/login' userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} name={props.name} lastname={props.lastname} >Cliquez ici pour vous connectez hehe </Link>)
+                (<Link to='/login' userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} firstname={props.firstname} lastname={props.lastname} >Cliquez ici pour vous connectez hehe </Link>)
             }
         </div>
     );

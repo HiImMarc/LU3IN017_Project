@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import './FriendList.css'
 import { useState } from 'react'
 import axios from 'axios'
+import PopupFriendProfile from './PopupFriendProfile'
 
 export default function FriendList(props) {
 
@@ -9,6 +10,15 @@ export default function FriendList(props) {
 	useEffect(() => {
 		getFriendRequests()
 	}, [])
+
+	const [showPopupProfile, setShowPopupProfile] = useState(false);
+	function closePopupProfile() {
+		setShowPopupProfile(false)
+	}
+	function openPopupProfile() {
+		setShowPopupProfile(true)
+	}
+
 
 	async function getFriendRequests() {
 		try {
@@ -55,7 +65,7 @@ export default function FriendList(props) {
 		}
 	}
 
-	console.log("friends requests : ",friendrequests)
+	console.log("friends requests : ", friendrequests)
 
 	return (
 		<div className='FriendListMain'>
@@ -63,15 +73,15 @@ export default function FriendList(props) {
 				<h2>Friend Requests : </h2>
 				<ul>
 					{friendrequests.length > 0 ? friendrequests.map(request => (
-						<div className='requests' key={request.from}>
-							<li > {request.from} wants to be your friend</li>
+						<div className='requests' key={request._id}>
+							<li > {request.fromPseudo} veut être ton ami :{`\)`}</li>
 							<button onClick={() => handleFriendRequest(true, request)}>Accepter</button>
 							<br />
-							<button  onClick={() => handleFriendRequest(false, request)}>Refuser</button>
+							<button onClick={() => handleFriendRequest(false, request)}>Refuser</button>
 						</div>
 					))
 						:
-					<></>}
+						<></>}
 				</ul>
 			</div>
 			<div className='FriendList'>
@@ -79,12 +89,14 @@ export default function FriendList(props) {
 				<ul>
 					{props.friends.map(friend => (
 						<div className='friends'>
-							<li>MON AMI : {friend}</li>
+							<li>{friend.pseudo} | {friend.firstname} {friend.lastname}</li>
+							<button onClick={openPopupProfile}>Voir Profil</button>
+							<PopupFriendProfile showPopupProfile={showPopupProfile} closePopupProfile={closePopupProfile} userid={props.userid} 
+							authorid={props.authorid} friends={props.friends} data={props.data} pseudo={friend.pseudo} firstname={friend.firstname} lastname={friend.lastname}/>
 							<button onClick={() => deleteFriend()}>Retirer ami</button>
 						</div>
 					))}
 				</ul>
-				{/* Ajoutez ici la liste des amis acceptés */}
 			</div>
 		</div>
 	)

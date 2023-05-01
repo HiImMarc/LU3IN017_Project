@@ -16,7 +16,7 @@ export default function Profile(props) {
             <div className='profile'>
                 Pseudo : {props.pseudo}
                 <br />
-                Nom : {props.name}
+                Nom : {props.firstname}
                 <br />
                 Prénom : {props.lastname}
                 <br />
@@ -37,6 +37,7 @@ export default function Profile(props) {
                         likes={item.likes}
                         comments={item.comments}
                         friends={props.friends}
+                        date={item.date}
                     />
                 ))}
             </ul>

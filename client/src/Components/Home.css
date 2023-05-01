@@ -58,6 +58,12 @@ header {
   background-color: #2270b9;
   border-color: aqua;
 }
+.options{
+  flex: 1;
+  background-color: #2270b9;
+  border-color: aqua;
+}
+
 
 
 .sideBar {

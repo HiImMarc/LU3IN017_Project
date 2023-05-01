@@ -15,10 +15,11 @@ export default function MessageList(props) {
 						key={index}
 						msgid={item._id.toString()}
 						authorid={item.authorid}
+						authorPseudo={item.pseudo}
 						userid={props.userid}
 						name={item.name}
 						lastname={item.lastname}
-						pseudo={item.pseudo}
+						pseudo={props.pseudo}
 						content={item.content}
 						likes={item.likes}
 						comments={item.comments}

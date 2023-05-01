@@ -19,7 +19,9 @@ export default function PopupFriendRequest(props) {
         try {
             await axios.post("http://localhost:8000/friends/invitation", {
                 from: props.userid,
+                fromPseudo: props.pseudo, 
                 to: props.authorid,
+                toPseudo : props.authorPseudo,
                 message: message
             })
         } catch (error) {

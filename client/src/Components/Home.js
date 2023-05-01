@@ -8,7 +8,7 @@ import './Home.css'
 import axios from 'axios';
 import Profile from './Profile'
 import FriendList from './FriendList'
-
+import Options from './Options';
 
 function Home(props) {
 
@@ -31,7 +31,7 @@ function Home(props) {
     // Filtrer le tableau de messages en fonction de la valeur de recherche
     const filteredMessages = messageData.filter(item =>
         (searchInput.trim() === "") ||
-        item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+        item.firstname.toLowerCase().includes(searchInput.toLowerCase()) ||
         item.content.toLowerCase().includes(searchInput.toLowerCase()) ||
         item.lastname.toLowerCase().includes(searchInput.toLowerCase()) ||
         item.pseudo.toLowerCase().includes(searchInput.toLowerCase())
@@ -45,7 +45,9 @@ function Home(props) {
             messagesList = filteredMessages.filter(item => item.authorid === props.userid);
             break;
         case 'friends':
-            messagesList = filteredMessages.filter(item => props.friends.includes(item.authorid));
+            messagesList = filteredMessages.filter(item => {
+                return props.friends.some(friend => friend.id === item.authorid)
+            });
             break;
         default:
             messagesList = filteredMessages;
@@ -70,8 +72,8 @@ function Home(props) {
 
     console.log('Home : isConnected', props.isConnected)
     console.log("userid : ", props.userid);
-    console.log("friends : ",props.friends)
-    
+    console.log("friends : ", props.friends)
+
 
     return (
         <div className="home">
@@ -86,7 +88,7 @@ function Home(props) {
 
                     <label className='pseudo'>{props.pseudo}</label>
                     <br />
-                    <label className='nom'>{props.name}</label>
+                    <label className='nom'>{props.firstname}</label>
                     <br />
                     <label className='prenom'>{props.lastname}</label>
 
@@ -102,32 +104,40 @@ function Home(props) {
                         <button onClick={() => setFilter('all')}>Tous les messages</button>
                         <button onClick={() => setFilter('me')}>Mes messages</button>
                         <button onClick={() => setFilter('friends')}>Messages d'amis</button>
-                        <MessageList data={messagesList} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId} 
-                        friends={props.friends}/>
+                        <MessageList data={messagesList} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo}
+                            friends={props.friends} />
                     </div>
                     :
                     <></>
                 }
                 {page === "myprofile" ?
                     <div className='myprofile'>
-                        <Profile lastname={props.lastname} name={props.name} pseudo={props.pseudo} isConnected={props.isConnected} data={messagesList} 
-                        searchInput={searchInput} userid={props.userid} friends={props.friends}/>
+                        <Profile lastname={props.lastname} firstname={props.firstname} pseudo={props.pseudo} isConnected={props.isConnected} data={messagesList}
+                            searchInput={searchInput} userid={props.userid} friends={props.friends} />
                     </div>
                     :
                     <></>
                 }
                 {page === "friendlist" ?
                     <div className='friendlist'>
-                        <FriendList isConnected={props.isConnected} userid={props.userid} setUserId={props.setUserId} 
-                        friends={props.friends} />
+                        <FriendList isConnected={props.isConnected} userid={props.userid} setUserId={props.setUserId}
+                            friends={props.friends} data={messagesList} />
+                    </div>
+                    :
+                    <></>
+                }
+                {page === "options" ?
+                    <div className='options'>
+                        <Options isConnected={props.isConnected} userid={props.userid} setUserId={props.setUserId}
+                            friends={props.friends} data={messagesList} logout={props.logout}/>
                     </div>
                     :
                     <></>
                 }
                 <div className="sideBar">
-                    <SideBar changePage={changePage} updateMessages={getMessagesData} getMessagesData={getMessagesData} isConnected={props.isConnected} logout={props.logout} 
-                    login={props.login} userid={props.userid} setUserId={props.setUserId}
-                    pseudo={props.pseudo} name={props.name} lastname={props.lastname} />
+                    <SideBar changePage={changePage} updateMessages={getMessagesData} getMessagesData={getMessagesData} isConnected={props.isConnected} logout={props.logout}
+                        login={props.login} userid={props.userid} setUserId={props.setUserId}
+                        pseudo={props.pseudo} firstname={props.firstname} lastname={props.lastname} />
                 </div>
             </div>
 
