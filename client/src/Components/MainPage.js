@@ -9,7 +9,7 @@ export default function MainPage(props) {
             { props.isConnected ?
 
 
-            <Home isConnected={props.isConnected} login={props.getConnected} logout={props.setLogout}
+            <Home isConnected={props.isConnected} login={props.getConnected} logout={props.logout}
                 userid={props.userid} setUserId={props.setUserId}
                 pseudo={props.pseudo} firstname={props.firstname} lastname={props.lastname} setUserInfo={props.setUserInfo} 
                 friends={props.friends}
