@@ -1,15 +1,33 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
 import './Profile.css'
-import MessageList from './MessageList';
+import axios from 'axios';
 import ProfileMessage from './ProfileMessage';
 
 export default function Profile(props) {
 
-    console.log("qSDJQSKLFJDSKLIDJSQKLDJSQKLDJSKLDS",props.data)
+    const [nbMessages,setNbMessages] = useState(0)
+
+    function getNbMessages() {
+        axios.get("http://localhost:8000/messages/user",{
+            params:{
+                userid: props.userid
+            }
+        })
+            .then((res) => {
+                setNbMessages(res.data.length)
+                //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",res)
+            })
+            .catch(error => console.log(error))
+
+    }
+
+    useEffect(() => getNbMessages(), [])
+
+    //console.log("qSDJQSKLFJDSKLIDJSQKLDJSQKLDJSKLDS",props.data)
 
     const messagesList = props.data.filter(item => item.authorid === props.userid);
-    console.log("qSDJQSKLFJDSKLIDJSQKLDJSQKLDJSKLDS",messagesList)
+    //console.log("qSDJQSKLFJDSKLIDJSQKLDJSQKLDJSKLDS",messagesList)
 
     return (
         <div className='myprofile'>
@@ -22,7 +40,7 @@ export default function Profile(props) {
                 <br />
                 Nombre d'amis : {props.friends.length}
                 <br/> 
-                Nombre de messages : 
+                Nombre de messages : {nbMessages}
             </div>
             <br />
             <div className='mymessages'>

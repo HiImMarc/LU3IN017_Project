@@ -147,6 +147,15 @@ class Messages {
         })
     }
 
+    getAllMessagesUser(userid) {
+        return new Promise(async (resolve,reject) => {
+            await this.db.collection('Messages').find({authorid : userid}).toArray()
+            .then ((messages) => resolve(messages))
+            .catch((err) => reject(err))
+        })
+    }
+
+
 }
 
 module.exports = Messages;

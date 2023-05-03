@@ -32,11 +32,9 @@ export default function SideBar(props) {
 
 
             <button className='button-settings' onClick={() => props.changePage("options")}>Options</button>
-            {props.isConnected ?
-                (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} firstname={props.firstname} lastname={props.lastname} />)
-                :
-                (<Link to='/login' userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} firstname={props.firstname} lastname={props.lastname} >Cliquez ici pour vous connectez hehe </Link>)
-            }
+            (<Logout className='logout' logout={props.logout} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo} firstname={props.firstname} lastname={props.lastname} />)
+            
+        
         </div>
     );
 

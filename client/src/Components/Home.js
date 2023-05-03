@@ -24,7 +24,7 @@ function Home(props) {
     const [messageData, setMessageData] = useState([]);
     const [searchInput, setSearchInput] = useState("");
 
-    useEffect(async () => {
+    useEffect(() => {
         getMessagesData()
     }, [])
 

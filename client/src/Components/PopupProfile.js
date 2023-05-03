@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './PopupProfile.css'
 import { useState } from 'react'
 import PopupFriendRequest from './PopupFriendRequest'
 import ProfileMessage from './ProfileMessage'
+import axios from 'axios'
 
 export default function PopupProfile(props) {
 
@@ -13,6 +14,23 @@ export default function PopupProfile(props) {
     function closePopupFriendRequest() {
         setShowPopupFriendRequest(false)
     }
+
+    const [nbMessages,setNbMessages] = useState(0)
+
+    function getNbMessages() {
+        axios.get("http://localhost:8000/messages/user",{
+            params:{
+                userid: props.authorid
+            }
+        })
+            .then((res) => {
+                setNbMessages(res.data.length)
+                //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",res)
+            })
+            .catch(error => console.log(error))
+
+    }
+    useEffect(() => getNbMessages(), [])
 
     // Formulaire visible ou non
     const showhideclassName = props.showPopupProfile ? "display-block" : "display-none"
@@ -39,7 +57,7 @@ export default function PopupProfile(props) {
                     <div>Prénom : {props.name} </div>
                     <div>Nom : {props.lastname}</div>
                     <div>Nombre d'amis : {props.friends.length}</div>
-                    <div>Nombre de messages : </div>
+                    <div>Nombre de messages : {nbMessages}</div>
                 </div>
                 <br/>
                 <div className='profile-messages'>

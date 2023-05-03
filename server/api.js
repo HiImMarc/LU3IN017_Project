@@ -115,7 +115,12 @@ router.delete("/messages/delete", async function (req, res) {
         .catch((err) => console.log(err))
 }) // Supprime un message avec l'id msgid
 
-
+router.get("/messages/user", async function(req,res) {
+    const message = new Messages(req.db)
+    await message.getAllMessagesUser(req.query.userid)
+    .then((result)=> res.send(result))
+    .catch((err) => console.error(err))
+})
 
 
 
