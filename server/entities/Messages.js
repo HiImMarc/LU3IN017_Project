@@ -20,7 +20,7 @@ class Messages {
                     date
             })
             .then ((res) => resolve(res))
-            .catch((err)=> console.error(err))
+            .catch((err)=> reject(err))
         })
     }
 

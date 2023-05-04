@@ -8,6 +8,12 @@ import PopupProfile from './PopupProfile';
 export default function Message(props) {
 	const [likecount, setlikecount] = useState(props.likes.length);
 
+	const likes = props.likes
+	const didLike = likes.includes(props.userid)
+	const [likestate, setLikeState] = useState(didLike)
+
+
+
 	const [showCommentForm, setShowCommentForm] = useState(false);
 	function closeCommentForm() {
 		setShowCommentForm(false)
@@ -39,6 +45,7 @@ export default function Message(props) {
 			})
 				.then((res) => {
 					setlikecount(res.data.likeCount)
+					likestate ? setLikeState(false) : setLikeState(true)
 				})
 		} catch (err) {
 			console.log(err)
@@ -87,7 +94,7 @@ export default function Message(props) {
 				</h2>
 				<p>{props.content}</p>
 				<br />
-				<button type='submit' onClick={handleLike}>J'aime</button><label>{likecount}</label>
+				<button type='submit' onClick={handleLike}>{likestate ? <label>A aimé</label> : <label>J'aime</label>}</button><label>{likecount}</label>
 				<br />
 				<button onClick={openCommentForm}>ecrire un commentaire</button>
 				<CommentForm showCommentForm={showCommentForm} closeCommentForm={closeCommentForm} openCommentForm={openCommentForm} msgid={props.msgid}
