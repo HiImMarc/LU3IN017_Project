@@ -74,7 +74,7 @@ export default function FriendList(props) {
 				<ul>
 					{friendrequests.length > 0 ? friendrequests.map(request => (
 						<div className='requests' key={request._id}>
-							<li > {request.fromPseudo} veut être ton ami :{`\)`}</li>
+							<li > {request.fromPseudo} veut être ton ami :{`\)`}  : {request.message}</li>
 							<button onClick={() => handleFriendRequest(true, request)}>Accepter</button>
 							<br />
 							<button onClick={() => handleFriendRequest(false, request)}>Refuser</button>
