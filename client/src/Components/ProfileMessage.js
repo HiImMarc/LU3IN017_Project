@@ -1,7 +1,7 @@
 import React from 'react'
+import './ProfileMessage.css'
 
 export default function ProfileMessage(props) {
-    //console.log("BBBBBBBBBBB",props.date)
 	const date = new Date(props.date);
 	const time = date.toLocaleString('fr-FR', {
 		day: 'numeric',
@@ -13,9 +13,9 @@ export default function ProfileMessage(props) {
 		hour12: false
 	});
     return (
-        <div>
+        <div className='profilemessage'>
             <h2>{time} : </h2>
-            <p>{props.content}</p>
+            <p className='profiletexte'>{props.content}</p>
         </div>
     )
 }

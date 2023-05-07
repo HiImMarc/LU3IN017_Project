@@ -1,27 +1,36 @@
 .sidebar {
-    position: sticky;
-    top: 80px; /* hauteur du header */
+    height: 100%;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 80px); /* soustraire la hauteur du header pour que la sidebar occupe tout l'espace restant */
-    justify-content: space-between;
+    align-items: center;
+
+    border-left: 2px solid grey;
 }
 
-.sidebar button {
-    height: 40px;
-    width: 300px;
-    margin-bottom: 40px;
+.sidebar-button {
+    width: 90%;
+    height: 50px;
+
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    border: none;
+    border-bottom: 2px solid gray;
+    background: none;
+    font-size: 20px;
+    font-weight: 500;
 }
 
-.sidebar .button-accueil {
-    margin-top: 30px;
+.sidebar-button:hover {
+    background-image: linear-gradient(to right, rgba(45, 98, 158,0.3), rgb(255, 255, 255) 100%);
+    transition: background-position 0.3s ease;
+    cursor: pointer;
 }
 
-.sidebar .button-settings {
-    margin-top: auto;
-    margin-bottom: 40px;
-}
-
-.sidebar .logout {
-    margin-bottom: 20px;
+.sidebar-button p {
+    padding-right: 15px;
 }

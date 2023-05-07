@@ -1,5 +1,5 @@
 import React from 'react'
-import './PopupProfile.css'
+import './PopupFriendProfile.css'
 import ProfileMessage from './ProfileMessage'
 
 export default function PopupFriendProfile(props) {
@@ -12,36 +12,33 @@ export default function PopupFriendProfile(props) {
 
     return (
         <div className={showhideclassName}> {/* Dans le css on controle l'affichage */}
-            <section className='main'>
+            <section className='profilebox' id='puf'>
                 <button className="close" onClick={props.closePopupProfile}>
                     &times;
                 </button>
-
-                <div className='profile'>
-                    <div >Profil : {props.pseudo}</div>
-                    <div>Prénom : {props.firstname} </div>
-                    <div>Nom : {props.lastname}</div>
-                    <div>Nombre d'amis : {props.friends.length}</div>
-                    <div>Nombre de messages : </div>
+                <div className='popupfirst'>
+                    <div >Profil de {props.pseudo}</div>
+                </div>
+                <div className='profile' id='pufprof'>
+                    <p><b>Nom :</b> {props.lastname}</p>
+                    <p><b>Prénom :</b> {props.firstname}</p>
+                    <p><b>Nombre d'amis :</b> {props.friends.length}</p>
+                    <p><b>Nombre de messages :</b> {}</p>
                 </div>
                 <br/>
-                <div className='profile-messages'>
-                        <ul>
-                        {messagesList.map((item, index) => (
-                            <ProfileMessage
-                                key={index}
-                                msgid={item._id.toString()}
-                                authorid={item.authorid}
-                                userid={props.userid}
-                                content={item.content}
-                                likes={item.likes}
-                                comments={item.comments}
-                                friends={props.friends}
-                                date={item.date}
-                            />
-                        ))}
-                    </ul>
-                </div>
+                {messagesList.map((item, index) => (
+                    <ProfileMessage
+                        key={index}
+                        msgid={item._id.toString()}
+                        authorid={item.authorid}
+                        userid={props.userid}
+                        content={item.content}
+                        likes={item.likes}
+                        comments={item.comments}
+                        friends={props.friends}
+                        date={item.date}
+                    />
+                ))}
             </section>
         </div>
     )

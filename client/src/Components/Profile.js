@@ -16,7 +16,6 @@ export default function Profile(props) {
         })
             .then((res) => {
                 setNbMessages(res.data.length)
-                //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",res)
             })
             .catch(error => console.log(error))
 
@@ -24,27 +23,21 @@ export default function Profile(props) {
 
     useEffect(() => getNbMessages(), [])
 
-    //console.log("qSDJQSKLFJDSKLIDJSQKLDJSQKLDJSKLDS",props.data)
-
     const messagesList = props.data.filter(item => item.authorid === props.userid);
-    //console.log("qSDJQSKLFJDSKLIDJSQKLDJSQKLDJSKLDS",messagesList)
 
     return (
         <div className='myprofile'>
+            <h2 className='monprofil'>Mon profil :</h2>
+            <br/>
             <div className='profile'>
-                Pseudo : {props.pseudo}
-                <br />
-                Nom : {props.firstname}
-                <br />
-                Prénom : {props.lastname}
-                <br />
-                Nombre d'amis : {props.friends.length}
-                <br/> 
-                Nombre de messages : {nbMessages}
+                <p><b>Pseudo :</b> {props.pseudo}</p>
+                <p><b>Nom :</b> {props.lastname}</p>
+                <p><b>Prénom :</b> {props.firstname}</p>
+                <p><b>Nombre d'amis :</b> {props.friends.length}</p>
+                <p><b>Nombre de messages :</b> {nbMessages}</p>
             </div>
-            <br />
+            <br/>
             <div className='mymessages'>
-                <ul>
                 {messagesList.map((item, index) => (
                     <ProfileMessage
                         key={index}
@@ -58,7 +51,6 @@ export default function Profile(props) {
                         date={item.date}
                     />
                 ))}
-            </ul>
             </div>
         </div>
     )

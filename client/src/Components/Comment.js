@@ -1,4 +1,5 @@
 import React from 'react'
+import './Comment.css'
 
 function Comment(props) {
 	const date = new Date(props.date);
@@ -13,8 +14,12 @@ function Comment(props) {
 	});
     return (
         <div className='comment'>
+			<button className="close" onClick={props.closeCommentsList}>
+                &times;
+            </button>
+			<div className='titre'>Commentaires</div>
             <h2>{props.pseudo} le {time} </h2>
-            <div>{props.content}</div>
+            <div className='commentaire'>{props.content}</div>
         </div>
     )
 }

@@ -1,0 +1,49 @@
+.message {
+    box-sizing: border-box;
+    min-width: 47%;
+    height: 200px;
+    margin: 15px 0 0 25px;
+    padding: 15px;
+
+    border-radius: 10px;
+    border: 2px solid gray;
+}
+
+.profil-button {
+    margin-left: 15px;
+    font-size: 23px;
+    cursor: pointer;
+
+    border: none;
+    background: none;
+    color: rgb(32, 74, 122);
+}
+
+.texte {
+    height: 40%;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 0 10px 0;
+    background-color: rgba(228, 226, 226, 0.445);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.reactions {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.reactions button {
+    background: none;
+    border: none;
+    display: flex;
+    cursor: pointer;
+}
+
+.reactions p {
+    padding-left: 10px;
+}
+
+.reactions label {
+    padding-right: 5px;
+}

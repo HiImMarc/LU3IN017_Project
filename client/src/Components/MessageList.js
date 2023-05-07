@@ -1,5 +1,6 @@
 import React from 'react';
 import Message from './Message';
+import './MessageList.css'
 
 export default function MessageList(props) {
 
@@ -8,29 +9,24 @@ export default function MessageList(props) {
 
 	return (
 		<div className='messagelist'>
-
-			(<ul>
-				{messages.map((item, index) => (
-					<Message
-						key={index}
-						msgid={item._id.toString()}
-						authorid={item.authorid}
-						authorPseudo={item.pseudo}
-						userid={props.userid}
-						name={item.name}
-						lastname={item.lastname}
-						pseudo={props.pseudo}
-						content={item.content}
-						likes={item.likes}
-						comments={item.comments}
-						friends={props.friends}
-						date={item.date}
-						data={props.data}
-					/>
-				))}
-			</ul>)
-
-
+			{messages.map((item, index) => (
+				<Message
+					key={index}
+					msgid={item._id.toString()}
+					authorid={item.authorid}
+					authorPseudo={item.pseudo}
+					userid={props.userid}
+					name={item.name}
+					lastname={item.lastname}
+					pseudo={props.pseudo}
+					content={item.content}
+					likes={item.likes}
+					comments={item.comments}
+					friends={props.friends}
+					date={item.date}
+					data={props.data}
+				/>
+			))}
 		</div>
 	);
 }

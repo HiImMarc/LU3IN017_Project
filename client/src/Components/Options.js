@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios';
+import './Options.css';
 
 
 export default function Options(props) {
@@ -18,12 +19,9 @@ export default function Options(props) {
 
     }
 
-
     return (
-        <div className='main'>
-            <button className='deleteaccount' onClick={()=> deleteAccount()}>DELETE MY ACCOUNT</button>
-
-
+        <div className='options'>
+            <button className='deleteaccount' onClick={()=> deleteAccount()}>SUPPRIMER MON COMPTE</button>
         </div>
     )
 }

@@ -3,6 +3,10 @@ import './PopupFriendRequest.css'
 import { useState } from 'react';
 import axios from 'axios';
 
+// FONT AWESOME
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+
 export default function PopupFriendRequest(props) {
 
     /*On récupère le message*/
@@ -32,14 +36,17 @@ export default function PopupFriendRequest(props) {
 
     return (
         <div className={showhideclassName}> {/* Dans le css on controle l'affichage */}
-            <section className='main'>
+            <section className='friendrequest'>
                 <button className="close" onClick={props.closePopupFriendRequest}>
                     &times;
                 </button>
-                <br />
-                <form className='form'>
-                    <input type="text" placeholder='Écrivez votre message ici...' onChange={setMessage2} />
-                    <button type="submit" onClick={askFriend}>Envoyer invitation</button>
+                <div className='titre'>Demande d'ami</div>
+                <form>
+                    <textarea type="text" placeholder='Écrivez votre message ici...' onChange={setMessage2} />
+                    <button type="submit" onClick={askFriend}>
+                        <p>Envoyer la demande</p>
+                        <FontAwesomeIcon icon={faPaperPlane} />
+                    </button>
                 </form>
             </section>
         </div>

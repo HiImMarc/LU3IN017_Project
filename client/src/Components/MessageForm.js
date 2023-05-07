@@ -3,6 +3,10 @@ import { useState } from 'react';
 import './MessageForm.css'
 import axios from 'axios';
 
+// FONT AWESOME
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+
 function MessageForm(props) {
 
     /*On récupère le message*/
@@ -32,15 +36,18 @@ function MessageForm(props) {
 
     return (
         <div className={showhideclassName}> {/* Dans le css on controle l'affichage */}
-            <section className='main'>
+            <section className='messageForm'>
                 <button className="close" onClick={props.closeMessageForm}>
                     &times;
                 </button>
-                <form className='form'>
-                    <input type="text" placeholder='Écrivez votre message ici...' onChange={setMessage2} />
-                    <button type="submit" onClick={submitMessage}>Envoyer !</button>
+                <div className='titre'>Nouveau message</div>
+                <form>
+                    <textarea type="text" placeholder='Écrivez votre message ici...' onChange={setMessage2} />
+                    <button type="submit" onClick={submitMessage}>
+                        <p>Envoyer</p>
+                        <FontAwesomeIcon icon={faPaperPlane} />
+                    </button>
                 </form>
-
             </section>
         </div>
     )

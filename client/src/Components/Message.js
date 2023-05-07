@@ -4,6 +4,16 @@ import { useState } from 'react';
 import CommentForm from './CommentForm'
 import Comment from './Comment';
 import PopupProfile from './PopupProfile';
+import './Message.css'
+
+// FONT AWESOME
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faAddressCard } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faComments } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Message(props) {
 	const [likecount, setlikecount] = useState(props.likes.length);
@@ -23,8 +33,11 @@ export default function Message(props) {
 	}
 
 	const [openComments, setOpenComments] = useState(false)
-	function handleOpenComments() {
-		setOpenComments(!openComments)
+	function openCommentsList() {
+		setOpenComments(true)
+	}
+	function closeCommentsList(){
+		setOpenComments(false)
 	}
 
 	const [showPopupProfile, setShowPopupProfile] = useState(false);
@@ -82,27 +95,37 @@ export default function Message(props) {
 
 	return (
 		<div className="message">
-			<li>
-				<h2>{props.name} {props.lastname} | @{props.authorPseudo} | {time}
-					{props.userid == props.authorid ? (
-						<button onClick={handleDeleteMessage}>delete</button>
-					)
-						:
-						<button onClick={openPopupProfile}>Voir Profil</button>}
-						<PopupProfile showPopupProfile={showPopupProfile} closePopupProfile={closePopupProfile} userid={props.userid} date={time} authorPseudo={props.authorPseudo}
-						name={props.name} lastname={props.lastname} pseudo={props.pseudo} authorid={props.authorid} friends={props.friends} data={props.data}/>
-				</h2>
-				<p>{props.content}</p>
-				<br />
-				<button type='submit' onClick={handleLike}>{likestate ? <label>A aimé</label> : <label>J'aime</label>}</button><label>{likecount}</label>
-				<br />
-				<button onClick={openCommentForm}>ecrire un commentaire</button>
+			<h2>{props.name} {props.lastname} | @{props.authorPseudo} | {time}
+				{props.userid == props.authorid ? (
+					<button className='profil-button' title='Supprimer le message' onClick={handleDeleteMessage}>
+						<FontAwesomeIcon icon={faTrash} />
+					</button>
+				)
+					:
+					<button className='profil-button' title='Voir le profil' onClick={openPopupProfile}>
+						<FontAwesomeIcon icon={faAddressCard} />	
+					</button>}
+					<PopupProfile showPopupProfile={showPopupProfile} closePopupProfile={closePopupProfile} userid={props.userid} date={time} authorPseudo={props.authorPseudo}
+					name={props.name} lastname={props.lastname} pseudo={props.pseudo} authorid={props.authorid} friends={props.friends} data={props.data}/>
+			</h2>
+			<div className='texte'>{props.content}</div>
+			<div className='reactions'>
+				<button type='submit' onClick={handleLike}>
+					<label>{likecount}</label>
+					<FontAwesomeIcon icon={faHeart}  />
+					{likestate ? <p>A aimé</p> : <p>J'aime</p>}
+				</button> |
+				<button onClick={openCommentForm}>
+					<FontAwesomeIcon icon={faPenToSquare} />
+					<p>Commenter</p>
+				</button> |
 				<CommentForm showCommentForm={showCommentForm} closeCommentForm={closeCommentForm} openCommentForm={openCommentForm} msgid={props.msgid}
 					userid={props.userid} lastname={props.lastname} name={props.name} pseudo={props.pseudo} />
-				<br />
-				<div className='comment-dropdown'>
-					<button onClick={handleOpenComments}>commentaires</button>
-					{openComments ?
+				<button onClick={openCommentsList}>
+					<FontAwesomeIcon icon={faComments} />
+					<p>Commentaires</p>
+				</button>
+				{openComments ?
 						(props.comments.map((item, index) => (
 							<Comment
 								key={index}
@@ -113,12 +136,12 @@ export default function Message(props) {
 								pseudo={item.pseudo}
 								content={item.content}
 								date={item.date}
+								closeCommentsList={closeCommentsList}
 							/>
 						)))
-						:
-						<></>}
-				</div>
-			</li>
+					:
+					<></>}
+			</div>
 		</div>
 	);
 }

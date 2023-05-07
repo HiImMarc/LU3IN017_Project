@@ -77,23 +77,24 @@ export default function Login(props) {
     console.log("DANS LOGIN USER ID : ", props.userid)
 
     return (
-        <div className='main'>
+        <div className='loginbox'>
+            <div className='illustration'></div>
             <div className='loginform'>
+                <div className='accroche'>Connectez et exprimez-vous sur Birdy !</div>
                 <form method="POST" action="" id="form">
-                    <input className='login' type="text" placeholder='Login' onChange={getLogin} />
+                    <input className='login' type="text" placeholder='Identifiant' onChange={getLogin} />
                     <br />
-                    <input className='mdp' type="password" placeholder='Password' onChange={getPassword} />
+                    <input className='mdp' type="password" placeholder='Mot de passe' onChange={getPassword} />
                     <br />
-                    <button className='bConnexion' type="submit" onClick={submit}> Connexion </button>
-                    <button type="reset">Annuler</button>
+                    <button className='bConnexion' type="submit" onClick={submit}>Connexion</button>
                 </form>
+                <Link className='tosignup' to='/signup'>Pas de compte ? Inscrivez vous ici</Link>
+                { wronglogins ? 
+                    <div className='mauvais'>L'identifiant et/ou le mot de passe ne sont pas corrects</div>
+                    :
+                    <></>
+                }
             </div>
-            { wronglogins ? 
-            <div>Mauvais identifiants</div>
-            :
-            <></>
-            }
-            <Link className='tosignup' to='/signup'>Pas de compte ? Inscrivez vous ici</Link>
         </div>
     );
 }

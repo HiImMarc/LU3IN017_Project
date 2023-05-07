@@ -1,14 +1,44 @@
 .FriendListMain {
-    display: flex;
-    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
     height: 100%;
+    padding : 0 15px 0 15px;
 }
-  
+
 .FriendRequests {
-    flex-basis: 50%;
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(50% - 7px);
+    border-bottom: 2px solid gray;
+}
+
+.requests {
+    width: 30%;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+}
+
+.accept {
+    color: rgb(8, 180, 8);
+}
+
+.refuse {
+    color: red;
 }
 
 .FriendList {
-    flex-basis: 50%;
-    border-left: 1px solid black;
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(50% - 7px);
+    margin-top: 14px;
+}
+
+.friends {
+    width: 30%;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
 }

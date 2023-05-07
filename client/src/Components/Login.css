@@ -1,29 +1,101 @@
-.main{
-    text-align: center;
-    justify-content: center;
+.loginbox {
+    height: 80%;
+    width: 60%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+
     display: flex;
-    padding: 150px 0 298px 0;
-    background-color: grey;
+
+    border: 3px solid rgb(45, 98, 158);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+    background-color: rgb(45, 98, 158);
 }
 
-.signinform {
-    float: left;
+.illustration {
     width: 50%;
-}
-.loginform{
-    float: right;
-    display: flex;
-    justify-content: center;
-    width: 50%;
-    background-color: seagreen;
+    height: 100%;
+    background-image: url("../../public/login-illustration.png");
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.mdp, .login{
+.loginform {
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+    background-color: white;
+}
+
+.accroche {
+    width: 80%;
+    margin-bottom: 30px;
+    font-size: xx-large;
+    font-weight: 700;
+    text-align: left;
+}
+
+.loginform form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.loginform input {
+    box-sizing: border-box;
     height: 40px;
-    width: 300px;
+    width: 100%;
+
+    padding-left: 10px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+
+    background-color: rgba(0, 26, 255, 0.082);
 }
 
-.bConnexion{
-    background-color: silver;
-    width: 280px;
+.loginform input:hover {
+    border: 2px solid black;
+}
+
+.loginform button {
+    height: 35px;
+    width: 150px;
+
+    border: none;
+    font-size: medium;
+    font-weight: 500;
+    color: white;
+    background-color: green;
+}
+
+.loginform button:hover {
+    border: 2px solid black;
+}
+
+.loginbox a {
+    width: 80%;
+    margin-top: 10px;
+    font-weight: 500;
+    color: black;
+}
+
+.mauvais {
+    width: 80%;
+    margin-top: 10px;
+    font-weight: 500;
+    text-align: left;
+    color: rgb(219, 39, 39);
 }

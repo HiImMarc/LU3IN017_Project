@@ -16,14 +16,12 @@ export default function SearchBar(props) {
     }
 
     return (
-        <div className="search-bar">
-            <input
+        <input
                 type="text"
                 value={searchInput}
                 placeholder="Rechercher..."
                 onChange={handleSearch}
                 onKeyDown={handleKeyDown}
-            />
-        </div>
+        />
     );
 }

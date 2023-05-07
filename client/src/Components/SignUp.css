@@ -1,20 +1,93 @@
-.form {
+.signUp {
+    height: 80%;
+    width: 60%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+
     display: flex;
+
+    border: 3px solid rgb(45, 98, 158);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+    background-color: rgb(45, 98, 158);
+}
+
+.illustration {
+    width: 50%;
+    height: 100%;
+    background-image: url("../../public/login-illustration.png");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.signupform {
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    height: 425px;
-    width: 100%;
-    background-color: seagreen;
+    align-items: center;
+
+    border-radius: 10px;
+    background-color: white;
 }
 
-.login, .mdp, .name, .lastname {
+.accroche {
+    width: 80%;
+    margin-bottom: 30px;
+    font-size: xx-large;
+    font-weight: 700;
+    text-align: left;
+}
+
+.signupform form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.signupform input {
+    box-sizing: border-box;
     height: 40px;
-    width: 300px;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    width: 100%;
+
+    padding-left: 10px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+
+    background-color: rgba(0, 26, 255, 0.082);
 }
 
+.signupform input:hover {
+    border: 2px solid black;
+}
 
-.bConnexion{
-    background-color: silver;
-    width: 280px;
+.signupform button {
+    height: 35px;
+    width: 150px;
+
+    border: none;
+    font-size: medium;
+    font-weight: 500;
+    color: white;
+    background-color: green;
+}
+
+.signupform button:hover {
+    border: 2px solid black;
+}
+
+.signUp a {
+    width: 80%;
+    margin-top: 10px;
+    font-weight: 500;
+    color: black;
 }

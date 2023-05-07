@@ -47,24 +47,25 @@ export default function SignUp(props) {
     }
 
     return (
-        <div className='main'>
-            <div className='form'>
+        <div className='signUp'>
+            <div className='illustration'></div>
+            <div className='signupform'>
+                <div className='accroche'>Inscrivez-vous des tonnes de personne vous attendent sur Birdy !</div>
                 <form method="POST" action="" id="form">
-                    <input className='login' type="text" placeholder='Login' onChange={getLogin} />
+                    <input className='login' type="text" placeholder='Identifiant' onChange={getLogin} />
                     <br />
-                    <input className='mdp' type="password" placeholder='Password' onChange={getPassword} />
+                    <input className='mdp' type="password" placeholder='Mot de passe' onChange={getPassword} />
                     <br />
-                    <input className='name' type="text" placeholder='Name' onChange={getName} />
+                    <input className='name' type="text" placeholder='Prénom' onChange={getName} />
                     <br />
-                    <input className='lastname' type="text" placeholder='lastName' onChange={getLastName} />
+                    <input className='lastname' type="text" placeholder='Nom' onChange={getLastName} />
                     <br />
                     <button className='bConnexion' type="submit" onClick={submit}>
                         Inscription
-                    </button><button type="reset">Annuler</button>
+                    </button>
                 </form>
+                <Link className='tologin' to='/login'>Déjà inscrit ? Connectez vous ici</Link>
             </div>
-            <Link className='tologin' to='/login'>Déjà inscrit ? Connectez vous ici</Link>
-
         </div>
     );
 }

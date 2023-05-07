@@ -1,72 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    overflow-x: hidden;
+}
+
 .home {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+    height: 100vh;
+    width: 100vw;
 }
 
+.header {
+    height: 70px;
+    width: 100%;
 
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  flex: 0 0 auto;
-  z-index: 1;
+    position: sticky;
+    top: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  background-color: #b42828;
-  height: 80px;
-  padding: 0 20px;
-}
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
 
-.logo {     
-  flex: 2;
+    background-color: rgb(45, 98, 158);
 }
 
 .concreteLogo {
-  width: 50px;
-  height: 50px;
+    width: 50px;
+    height: 50px;
+    padding-left: 20px;
 }
 
-.searchBar {
-  flex: 3;
-  justify-content: center;
-  margin: 0 16px;
+.searchBar input {
+    width: 300px;
+    height: 35px;
+    padding-left: 15px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+}
+
+.miniprofile {
+    padding-right: 20px;
+    text-align: right;
+    font-size: large;
+    font-weight: 500;
+    color: white;
 }
 
 .core {
-  margin-top: 80px;
-  display: flex;
-  flex: 1 0 auto;
-  }
-  
-.messageList {
-  flex: 1;
-  background-color: #2270b9;
-  border-color: aqua;
+    width: 100%;
+    height: calc(100% - 80px);
+    margin-top: 10px;
+    display: flex;
 }
+
+.accueil {
+    width: calc(100% - 350px);
+}
+
+.filter-button {
+    width: 200px;
+    height: 30px;
+    margin: 15px 10px 10px 25px;
+
+    border: none;
+    border-radius: 15px;
+
+    font-size: 15px;
+    font-weight: 500;
+    background-color: rgba(158, 158, 158, 0.6);
+}
+
+.filter-button:hover {
+    border: 2px solid black;
+    cursor: pointer;
+}
+
 .myprofile {
-  flex: 1;
-  background-color: #2270b9;
-  border-color: aqua;
+    width: calc(100% - 350px);
 }
+
 .friendlist{
-  flex: 1;
-  background-color: #2270b9;
-  border-color: aqua;
-}
-.options{
-  flex: 1;
-  background-color: #2270b9;
-  border-color: aqua;
+    width: calc(100% - 350px);
 }
 
-
+.options {
+    width: calc(100% - 350px);
+}
 
 .sideBar {
-  flex: 0 0 300px;
-  background-color: #0e3d18;
+    width: 350px;
 }

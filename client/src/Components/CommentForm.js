@@ -55,13 +55,14 @@ function CommentForm(props) {
 
     return (
         <div className={showhideclassName}> {/* Dans le css on controle l'affichage */}
-            <section className='main'>
+            <section className='commentForm'>
                 <button className="close" onClick={props.closeCommentForm}>
                     &times;
                 </button>
-                <form className='form'>
-                    <input type="text" placeholder='Écrivez votre commentaire ici...' onChange={setComment2} />
-                    <button type="submit" onClick={submitComment}>Envoyer commentaire !</button>
+                <div className='titre'>Nouveau commentaire</div>
+                <form>
+                    <textarea type="text" placeholder='Écrivez votre commentaire ici...' onChange={setComment2} />
+                    <button type="submit" onClick={submitComment}>Commenter</button>
                 </form>
 
             </section>

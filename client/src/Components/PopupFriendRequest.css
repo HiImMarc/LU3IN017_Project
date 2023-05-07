@@ -1,18 +1,67 @@
-.main {
-    position: fixed;
-    background: white;
-    width: 50%;
-    height: auto;
+.friendrequest {
+    height: 35%;
+    width: 60%;
+
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 20px;
+    padding: 15px;
+
+    border: 3px solid rgb(45, 98, 158);
     border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+    background-color: white;
+}
+
+.friendrequest form {
+    width: 100%;
+    height: 85%;
+}
+
+.friendrequest form textarea{
+    box-sizing: border-box;
+    padding: 10px;
+
+    width: 100%;
+    height: 75%;
+    resize: none;
+
+    border: 2px solid gray;
+    border-radius: 20px;
+}
+
+.friendrequest form button {
+    height: 40px;
+    width: 300px;
+    margin-top: 10px;
+
+    position: relative;
+    left: calc(100% - 300px);
+    border: none;
+    background: rgb(45, 98, 158);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+    font-weight: 500;
+    color: white;
+}
+
+.friendrequest form button p {
+    padding-right: 10px;
+}
+
+.friendrequest form button:hover {
+    border: 2px solid black;
+    cursor: pointer;
 }
 
 .display-block {
     display: block;
-
 }
 
 .display-none {

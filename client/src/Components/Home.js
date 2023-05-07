@@ -77,7 +77,7 @@ function Home(props) {
 
     return (
         <div className="home">
-            <header>
+            <div className='header'>
                 <div className='logo'>
                     <img className='concreteLogo' src={Logo} />
                 </div>
@@ -85,25 +85,17 @@ function Home(props) {
                     <SearchBar onSearch={handleSearch} />
                 </div>
                 <div className='miniprofile'>
-
                     <label className='pseudo'>{props.pseudo}</label>
-                    <br />
-                    <label className='nom'>{props.firstname}</label>
-                    <br />
-                    <label className='prenom'>{props.lastname}</label>
-
-                    {/* RAJOUTER LE NOMBRE D AMIS ? ET PTET LE NOMBRE DE MSG ? ET DAUTRES TRUCS JSP ENCORE */}
-
                 </div>
-            </header>
+            </div>
 
             <div className="core">
 
                 {page === "accueil" ?
-                    <div className="messageList">
-                        <button onClick={() => setFilter('all')}>Tous les messages</button>
-                        <button onClick={() => setFilter('me')}>Mes messages</button>
-                        <button onClick={() => setFilter('friends')}>Messages d'amis</button>
+                    <div className="accueil">
+                        <button className='filter-button' onClick={() => setFilter('all')}>Tous les messages</button>
+                        <button className='filter-button' onClick={() => setFilter('me')}>Mes messages</button>
+                        <button className='filter-button' onClick={() => setFilter('friends')}>Messages d'amis</button>
                         <MessageList data={messagesList} searchInput={searchInput} userid={props.userid} setUserId={props.setUserId} pseudo={props.pseudo}
                             friends={props.friends} />
                     </div>
@@ -111,10 +103,8 @@ function Home(props) {
                     <></>
                 }
                 {page === "myprofile" ?
-                    <div className='myprofile'>
-                        <Profile lastname={props.lastname} firstname={props.firstname} pseudo={props.pseudo} isConnected={props.isConnected} data={messagesList}
-                            searchInput={searchInput} userid={props.userid} friends={props.friends} />
-                    </div>
+                    <Profile lastname={props.lastname} firstname={props.firstname} pseudo={props.pseudo} isConnected={props.isConnected} data={messagesList}
+                        searchInput={searchInput} userid={props.userid} friends={props.friends} />
                     :
                     <></>
                 }
@@ -127,10 +117,8 @@ function Home(props) {
                     <></>
                 }
                 {page === "options" ?
-                    <div className='options'>
-                        <Options isConnected={props.isConnected} userid={props.userid} setUserId={props.setUserId}
-                            friends={props.friends} data={messagesList} logout={props.logout}/>
-                    </div>
+                    <Options isConnected={props.isConnected} userid={props.userid} setUserId={props.setUserId}
+                        friends={props.friends} data={messagesList} logout={props.logout}/>
                     :
                     <></>
                 }
