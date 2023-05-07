@@ -3,7 +3,7 @@ import Message from './Message';
 
 export default function MessageList(props) {
 
-	const messages = props.data
+	const messages = props.data.reverse() // reverse() pour avoir les msg du plus récent au plus ancien
 	console.log("messages dans MessageList : ", messages)
 
 	return (

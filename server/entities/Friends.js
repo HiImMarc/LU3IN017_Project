@@ -6,14 +6,14 @@ class Friends {
         this.db = db
     }
 
-    areFriends(userid1, userid2) {
-        try {
-            const friends = getFriends(userid1)
-            return friends.includes(userid2)
-        } catch (error) {
-            throw new Error('Error areFriends');
-        }
-    }
+    // areFriends(userid1, userid2) {
+    //     try {
+    //         const friends = getFriends(userid1)
+    //         return friends.includes(userid2)
+    //     } catch (error) {
+    //         throw new Error('Error areFriends');
+    //     }
+    // }
 
     sendFriendRequest(from, fromPseudo, to, toPseudo, message) {
         console.log("dans askFriend : ", from, to, message)
@@ -25,13 +25,9 @@ class Friends {
                     to,
                     toPseudo,
                     message
-                }, (error, result) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve(result)
-                    }
                 })
+                .then(res => resolve(res))
+                .catch(err => reject(err))
         })
     }
 
@@ -93,9 +89,10 @@ class Friends {
 
     deleteFriend(userid, friendid) {
         return new Promise(async (resolve, reject) => {
-
-            const user1 = this.db.collection('Users').findOne({ _id: new ObjectId(userid) })
-            const user2 = this.db.collection('Users').findOne({ _id: new ObjectId(friendid) })
+            
+            const user1 = await this.db.collection('Users').findOne({ _id: new ObjectId(userid) })
+            const user2 = await this.db.collection('Users').findOne({ _id: new ObjectId(friendid) })
+            console.log("user2 : ",friendid)
             const friends1 = user1.friends || []
             const friends2 = user2.friends || []
             const newfriends1 = friends1.filter(friend => { return friends1.some(friend_ => friend.id != friendid)})
@@ -107,16 +104,16 @@ class Friends {
             }, {
                 $set: { friends: newfriends1 }
             })
-                .then(res => resolve("friend deleted", res))
-                .catch(e => console.error(e))
+                .then(res => resolve(res))
+                .catch(e => reject(e))
 
             await this.db.collection('Users').updateOne({
                 _id: new ObjectId(friendid)
             }, {
                 $set: { friends: newfriends2 }
             })
-                .then(res => resolve("friend deleted", res))
-                .catch(e => console.error(e))
+                .then(res => resolve(res))
+                .catch(e => reject(e))
         })
     }
 

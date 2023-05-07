@@ -45,7 +45,6 @@ export default function FriendList(props) {
 			})
 				.then(() => {
 					getFriendRequests()
-					props.getFriends()
 				})
 		} catch (error) {
 			console.log(error)
@@ -60,6 +59,7 @@ export default function FriendList(props) {
 					friendid: friendid
 				}
 			})
+			window.location.reload(false)
 		} catch (e) {
 			console.error(e)
 		}
@@ -88,16 +88,17 @@ export default function FriendList(props) {
 				<h2>Friend List : </h2>
 				<ul>
 					{props.friends.map(friend => (
-						<div className='friends'>
+						<div className='friends' key={friend.id}>
+							{/* {console.log("friendddddddddd : ",friend.id)} */}
 							<li>{friend.pseudo} | {friend.firstname} {friend.lastname}</li>
 							<button onClick={openPopupProfile}>Voir Profil</button>
 							<PopupFriendProfile showPopupProfile={showPopupProfile} closePopupProfile={closePopupProfile} userid={props.userid} 
 							authorid={props.authorid} friends={props.friends} data={props.data} pseudo={friend.pseudo} firstname={friend.firstname} lastname={friend.lastname}/>
-							<button onClick={() => deleteFriend()}>Retirer ami</button>
+							<button onClick={() => deleteFriend(friend.id)}>Retirer ami</button>
 						</div>
 					))}
 				</ul>
-			</div>
+			</div>Z
 		</div>
 	)
 }

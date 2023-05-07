@@ -10,7 +10,6 @@ const getDB = async (req, res, next) => { // Fonction pour donner une instance d
     try {
         const client = await connectToDB();
         req.db = client.db('Birdy');
-        process.on('SIGINT', () => client.close()); // Quand il y a une IT (ctrl c etc...) on ferme la database
         next();
     } catch (err) {
         console.error(err);
@@ -18,7 +17,6 @@ const getDB = async (req, res, next) => { // Fonction pour donner une instance d
     }
 };
 router.use(getDB);
-
 
 
 ///////////////////// SERVICES UTILISATEURS /////////////////////
@@ -57,6 +55,7 @@ router.delete("/users/delete", async function (req, res) {
     await user.deleteAccount(req.query.userid)
     .then((result) => res.send(result))
 }) // Supprime un compte
+
 
 ///////////////////// SERVICES MESSAGES /////////////////////
 
@@ -120,7 +119,7 @@ router.get("/messages/user", async function(req,res) {
     await message.getAllMessagesUser(req.query.userid)
     .then((result)=> res.send(result))
     .catch((err) => console.error(err))
-})
+}) // Messages d'un user
 
 
 
@@ -147,32 +146,23 @@ router.delete("/friends/invitation/response", async function (req, res) {
         .catch((err) => console.error(err))
 }) // Gère la réponse à une demande d'ami
 
-router.get("/friends/get", async function (req, res) {
-    const friend = new Friends(req.db)
-    console.log("/friends/get req.query.userid : ", req.query.userid)
-    await friend.getFriends(req.query.userid)
-        .then((result) => {
-            res.send(result)
-        })
-        .catch((err) => console.error(err))
-}) // Retourne les amis d'un user
+
+// router.get("/friends/get", async function (req, res) {
+//     const friend = new Friends(req.db)
+//     console.log("/friends/get req.query.userid : ", req.query.userid)
+//     await friend.getFriends(req.query.userid)
+//         .then((result) => {
+//             res.send(result)
+//         })
+//         .catch((err) => console.error(err))
+// }) // Retourne les amis d'un user
 
 router.delete("/friends/delete", async function (req, res) {
     const friend = new Friends(req.db)
+    console.log("req.query.friendid : ",req.query.friendid)
     await friend.deleteFriend(req.query.userid, req.query.friendid)
         .then((result) => res.send(result))
         .catch((err) => console.error(err))
 }) // Supprime le lien d'amitié entre deux users
 
-
-/* A FAIRE ? 
-router.delete("/users/delete/:userid", Users.logout) // Supprime un compte
-router.get("/users/id/:userid", Users.getId) // Récupère l'id d'un user
-
-router.get("/messages/user/:userid", Messages.getAllMessagesId) // Récupère les messages d'un user
-router.get("/messages/:msgid", Messages.getMessage) // Récupère un message 
-router.get("/messages/friend/:userid/:friendid", Messages.getMessagesFromAllFriends) // Récupère tout les messages d'un ami (friendid) d'un user (userid)
-router.get("/messages/friend/:userid", Messages.getMessagesFromFriend) // Récupère tout les messages des amis d'un user
-router.get("/messages/stats/:userid", Messages.getStats) // Récupère les statistiques des messages d'un user
-*/
 module.exports = router;
